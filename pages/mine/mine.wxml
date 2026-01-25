@@ -129,6 +129,46 @@
     </view>
   </view>
 
+  <!-- 存储管理 -->
+  <view class="section">
+    <view class="section-title">
+      <text class="section-icon">💾</text>
+      <text>存储管理</text>
+    </view>
+    
+    <!-- 存储使用情况 -->
+    <view class="storage-info">
+      <view class="storage-header">
+        <text class="storage-label">已使用空间</text>
+        <view class="storage-value-wrapper" bindtap="toggleStorageUnit">
+          <text class="storage-value" wx:if="{{storageUnit === 'MB'}}">{{storageUsedMB}} MB / {{storageLimitMB}} MB</text>
+          <text class="storage-value" wx:if="{{storageUnit === 'KB'}}">{{storageUsedKB}} KB / {{storageLimitKB}} KB</text>
+          <text class="storage-unit-toggle">🔄</text>
+        </view>
+      </view>
+      <view class="storage-bar-wrapper">
+        <view class="storage-bar">
+          <view class="storage-bar-fill {{storagePercentage > 80 ? 'warning' : ''}}" style="width: {{storagePercentage}}%"></view>
+        </view>
+        <text class="storage-percentage">{{storagePercentage}}%</text>
+      </view>
+      <text class="storage-tip" wx:if="{{storagePercentage > 80}}">⚠️ 存储空间即将用尽，建议清理数据</text>
+      <text class="storage-hint">点击数值可切换 MB/KB 显示</text>
+    </view>
+
+    <!-- 清除按钮 -->
+    <view class="storage-actions">
+      <view class="storage-btn storage-btn-items" bindtap="onClearItemsData">
+        <text class="storage-btn-icon">🗑️</text>
+        <text class="storage-btn-text">清除物品数据</text>
+      </view>
+      <view class="storage-btn storage-btn-all" bindtap="onClearAllData">
+        <text class="storage-btn-icon">⚠️</text>
+        <text class="storage-btn-text">清除所有数据</text>
+      </view>
+    </view>
+  </view>
+
   <!-- 底部留白 -->
   <view class="footer-space"></view>
 </view>

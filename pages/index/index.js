@@ -28,6 +28,19 @@ Page({
         const app = getApp();
         const actualTheme = app.getActualTheme ? app.getActualTheme() : 'light';
         this.setData({ darkMode: actualTheme === 'dark' });
+
+        // 同步更新导航栏颜色
+        if (actualTheme === 'dark') {
+            wx.setNavigationBarColor({
+                frontColor: '#ffffff',
+                backgroundColor: '#1a1a1a'
+            });
+        } else {
+            wx.setNavigationBarColor({
+                frontColor: '#000000',
+                backgroundColor: '#ffffff'
+            });
+        }
     },
 
     /**

@@ -11,6 +11,7 @@ Page({
     location: '',       // 存放位置（必填）
     category: '',       // 分类（可选）
     note: '',           // 备注（可选）
+    showUnitField: false, // 是否显示单位输入框
     // 选择器相关
     allLocations: [],
     allCategories: [],
@@ -39,6 +40,19 @@ Page({
     const app = getApp();
     const actualTheme = app.getActualTheme ? app.getActualTheme() : 'light';
     this.setData({ darkMode: actualTheme === 'dark' });
+
+    // 同步更新导航栏颜色
+    if (actualTheme === 'dark') {
+      wx.setNavigationBarColor({
+        frontColor: '#ffffff',
+        backgroundColor: '#1a1a1a'
+      });
+    } else {
+      wx.setNavigationBarColor({
+        frontColor: '#000000',
+        backgroundColor: '#ffffff'
+      });
+    }
   },
 
   /**
@@ -108,6 +122,11 @@ Page({
       wx.showToast({ title: '请输入位置名称', icon: 'none' });
       return;
     }
+    // 检查存储空间
+    if (!settingsUtil.hasEnoughStorage()) {
+      wx.showToast({ title: '存储空间不足，请清理数据', icon: 'none' });
+      return;
+    }
     if (settingsUtil.addCustomLocation(location)) {
       this.loadOptions();
       this.setData({
@@ -162,6 +181,11 @@ Page({
       wx.showToast({ title: '请输入分类名称', icon: 'none' });
       return;
     }
+    // 检查存储空间
+    if (!settingsUtil.hasEnoughStorage()) {
+      wx.showToast({ title: '存储空间不足，请清理数据', icon: 'none' });
+      return;
+    }
     if (settingsUtil.addCustomCategory(category)) {
       this.loadOptions();
       this.setData({
@@ -181,6 +205,20 @@ Page({
    */
   onNoteInput: function (e) {
     this.setData({ note: e.detail.value });
+  },
+
+  /**
+   * 显示单位输入框
+   */
+  showUnitFieldTap: function () {
+    this.setData({ showUnitField: true });
+  },
+
+  /**
+   * 隐藏单位输入框
+   */
+  hideUnitField: function () {
+    this.setData({ showUnitField: false, unit: '' });
   },
 
   /**
@@ -209,6 +247,24 @@ Page({
       wx.showToast({
         title: '请选择存放位置',
         icon: 'none'
+      });
+      return;
+    }
+
+    // 检查存储空间
+    if (!settingsUtil.hasEnoughStorage()) {
+      wx.showModal({
+        title: '存储空间不足',
+        content: '本地存储空间即将用尽，请前往「我的」页面清理数据后再添加新物品。',
+        confirmText: '去清理',
+        cancelText: '取消',
+        success: (res) => {
+          if (res.confirm) {
+            wx.switchTab({
+              url: '/pages/mine/mine'
+            });
+          }
+        }
       });
       return;
     }

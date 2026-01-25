@@ -179,6 +179,83 @@ function setTheme(theme) {
     return saveSettings(settings);
 }
 
+// ========== 存储管理相关 ==========
+
+// 微信小程序本地存储限制（单位：KB）
+const STORAGE_LIMIT_KB = 10 * 1024; // 10MB
+
+/**
+ * 获取存储使用情况
+ * @returns {Object} { usedKB, usedMB, limitKB, limitMB, percentage, keys }
+ */
+function getStorageInfo() {
+    try {
+        const info = wx.getStorageInfoSync();
+        const usedKB = info.currentSize || 0;
+        const limitKB = info.limitSize || STORAGE_LIMIT_KB;
+        return {
+            usedKB: usedKB,
+            usedMB: (usedKB / 1024).toFixed(2),
+            limitKB: limitKB,
+            limitMB: (limitKB / 1024).toFixed(0),
+            percentage: ((usedKB / limitKB) * 100).toFixed(1),
+            keys: info.keys || []
+        };
+    } catch (e) {
+        console.error('获取存储信息失败:', e);
+        return {
+            usedKB: 0,
+            usedMB: '0.00',
+            limitKB: STORAGE_LIMIT_KB,
+            limitMB: '10',
+            percentage: '0.0',
+            keys: []
+        };
+    }
+}
+
+/**
+ * 检查是否有足够的存储空间
+ * @param {number} requiredKB - 需要的空间（KB），默认检查是否还有至少100KB空间
+ * @returns {boolean}
+ */
+function hasEnoughStorage(requiredKB = 100) {
+    const info = getStorageInfo();
+    const availableKB = info.limitKB - info.usedKB;
+    return availableKB >= requiredKB;
+}
+
+/**
+ * 清除所有用户数据
+ * @returns {boolean}
+ */
+function clearAllData() {
+    try {
+        // 清除物品数据
+        wx.removeStorageSync('home_items');
+        // 重置设置为默认值
+        wx.setStorageSync(SETTINGS_KEY, getDefaultSettings());
+        return true;
+    } catch (e) {
+        console.error('清除数据失败:', e);
+        return false;
+    }
+}
+
+/**
+ * 仅清除物品数据
+ * @returns {boolean}
+ */
+function clearItemsData() {
+    try {
+        wx.removeStorageSync('home_items');
+        return true;
+    } catch (e) {
+        console.error('清除物品数据失败:', e);
+        return false;
+    }
+}
+
 module.exports = {
     PRESET_LOCATIONS,
     PRESET_CATEGORIES,
@@ -191,5 +268,10 @@ module.exports = {
     addCustomCategory,
     removeCustomCategory,
     getTheme,
-    setTheme
+    setTheme,
+    // 存储管理
+    getStorageInfo,
+    hasEnoughStorage,
+    clearAllData,
+    clearItemsData
 };

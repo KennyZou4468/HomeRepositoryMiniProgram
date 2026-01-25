@@ -168,6 +168,69 @@
   display: block;
 }
 
+/* 备注折叠样式 */
+.note-wrapper {
+  position: relative;
+}
+
+.note-content {
+  word-break: break-all;
+}
+
+.note-content.collapsed {
+  display: -webkit-box;
+  -webkit-line-clamp: 5;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.note-content.expanded {
+  display: block;
+}
+
+.note-expand-btn {
+  text-align: center;
+  padding: 12rpx 0;
+  margin-top: 8rpx;
+}
+
+.note-expand-btn text {
+  font-size: 26rpx;
+  color: #ff9a6c;
+}
+
+/* 可折叠表单项 */
+.form-item-collapsible {
+  position: relative;
+}
+
+.collapse-btn {
+  margin-left: auto;
+  font-size: 24rpx;
+  color: #ff9a6c;
+  padding: 4rpx 12rpx;
+}
+
+/* 添加字段按钮 */
+.add-field-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20rpx 32rpx;
+  border-bottom: 1rpx solid #f5f0ea;
+}
+
+.add-field-icon {
+  font-size: 28rpx;
+  color: #ff9a6c;
+  margin-right: 8rpx;
+}
+
+.add-field-text {
+  font-size: 28rpx;
+  color: #ff9a6c;
+}
+
 /* 操作按钮 */
 .action-buttons {
   margin-top: 40rpx;
@@ -210,6 +273,79 @@
 .btn-delete:active {
   background-color: #fffaf9;
   transform: scale(0.98);
+}
+
+/* 库存变更记录 */
+.history-section {
+  margin-top: 32rpx;
+  padding-top: 24rpx;
+  border-top: 2rpx dashed #f0ebe4;
+}
+
+.history-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16rpx;
+}
+
+.history-title {
+  font-size: 28rpx;
+  color: #8a8279;
+}
+
+.history-count {
+  font-size: 24rpx;
+  color: #c0b8ae;
+}
+
+.history-list {
+  display: flex;
+  flex-direction: column-reverse;
+}
+
+.history-item {
+  display: flex;
+  align-items: center;
+  padding: 16rpx 0;
+  border-bottom: 1rpx solid #f5f0ea;
+}
+
+.history-item:first-child {
+  border-bottom: none;
+}
+
+.history-delta {
+  min-width: 80rpx;
+  font-size: 32rpx;
+  font-weight: 600;
+  text-align: center;
+}
+
+.delta-plus {
+  color: #5a9b7a;
+}
+
+.delta-minus {
+  color: #e6995c;
+}
+
+.history-info {
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-left: 16rpx;
+}
+
+.history-after {
+  font-size: 26rpx;
+  color: #5a5a5a;
+}
+
+.history-time {
+  font-size: 24rpx;
+  color: #c0b8ae;
 }
 
 /* 编辑模式 */
@@ -286,6 +422,7 @@
 .form-textarea {
   width: 100%;
   min-height: 140rpx;
+  max-height: 300rpx;
   padding: 24rpx 28rpx;
   font-size: 30rpx;
   color: #5a5a5a;
@@ -294,6 +431,7 @@
   box-sizing: border-box;
   line-height: 1.6;
   border: 2rpx solid #f0ebe4;
+  overflow-y: auto;
 }
 
 .form-textarea::placeholder {
@@ -340,6 +478,7 @@
 .form-select {
   width: 100%;
   min-height: 88rpx;
+  line-height: 88rpx;
   padding: 0 28rpx;
   font-size: 30rpx;
   background-color: #faf8f5;
@@ -353,10 +492,16 @@
 
 .select-value {
   color: #5a5a5a;
+  line-height: 1;
+  display: flex;
+  align-items: center;
 }
 
 .select-placeholder {
   color: #c0b8ae;
+  line-height: 1;
+  display: flex;
+  align-items: center;
 }
 
 .select-arrow {
@@ -593,6 +738,52 @@
   color: #666666 !important;
 }
 
+.theme-dark .collapse-btn {
+  color: #ff9a6c !important;
+}
+
+.theme-dark .add-field-btn {
+  border-color: #3a3a3a !important;
+}
+
+.theme-dark .add-field-icon,
+.theme-dark .add-field-text {
+  color: #ff9a6c !important;
+}
+
+.theme-dark .note-expand-btn text {
+  color: #ff9a6c !important;
+}
+
+.theme-dark .note-content {
+  background-color: #333333 !important;
+}
+
+/* 库存变更记录暗色主题 */
+.theme-dark .history-section {
+  border-color: #3a3a3a !important;
+}
+
+.theme-dark .history-title {
+  color: #888888 !important;
+}
+
+.theme-dark .history-count {
+  color: #666666 !important;
+}
+
+.theme-dark .history-item {
+  border-color: #3a3a3a !important;
+}
+
+.theme-dark .history-after {
+  color: #d0d0d0 !important;
+}
+
+.theme-dark .history-time {
+  color: #666666 !important;
+}
+
 .theme-dark .form-input,
 .theme-dark .form-textarea {
   background-color: #333333 !important;
@@ -637,6 +828,11 @@
 
 .theme-dark .picker-close {
   color: #888888 !important;
+  background-color: #2a2a2a !important;
+}
+
+.theme-dark .picker-list {
+  background-color: #2a2a2a !important;
 }
 
 .theme-dark .picker-item {
@@ -651,6 +847,10 @@
 .theme-dark .picker-add-section {
   background-color: #252525 !important;
   border-color: #3a3a3a !important;
+}
+
+.theme-dark .picker-add-btn {
+  background-color: #252525 !important;
 }
 
 .theme-dark .picker-add-input {

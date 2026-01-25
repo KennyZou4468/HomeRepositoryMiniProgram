@@ -9,6 +9,9 @@ Page({
     itemId: '',         // 物品ID
     isEditing: false,   // 是否处于编辑模式
     editData: {},       // 编辑中的数据
+    noteExpanded: false, // 备注是否展开
+    showUnitField: false, // 是否显示单位输入框
+    initialCount: 0,    // 进入页面时的初始数量（用于记录库存变更）
     // 选择器相关
     allLocations: [],
     allCategories: [],
@@ -45,6 +48,19 @@ Page({
     const app = getApp();
     const actualTheme = app.getActualTheme ? app.getActualTheme() : 'light';
     this.setData({ darkMode: actualTheme === 'dark' });
+
+    // 同步更新导航栏颜色
+    if (actualTheme === 'dark') {
+      wx.setNavigationBarColor({
+        frontColor: '#ffffff',
+        backgroundColor: '#1a1a1a'
+      });
+    } else {
+      wx.setNavigationBarColor({
+        frontColor: '#000000',
+        backgroundColor: '#ffffff'
+      });
+    }
   },
 
   /**
@@ -69,7 +85,8 @@ Page({
       if (item) {
         this.setData({
           item: item,
-          editData: { ...item }
+          editData: { ...item },
+          initialCount: item.count  // 记录初始数量
         });
       } else {
         wx.showToast({
@@ -129,6 +146,49 @@ Page({
     item.count = item.count + 1;
     if (this.saveItem(item)) {
       this.setData({ item: item });
+    }
+  },
+
+  /**
+   * 页面卸载时记录库存变更
+   */
+  onUnload: function () {
+    this.recordHistoryIfChanged();
+  },
+
+  /**
+   * 检查并记录库存变更
+   */
+  recordHistoryIfChanged: function () {
+    const item = this.data.item;
+    const initialCount = this.data.initialCount;
+
+    if (!item) return;
+
+    const delta = item.count - initialCount;
+    if (delta === 0) return;  // 数量未变化，不记录
+
+    // 记录库存变更
+    this.addHistory(item, delta);
+    this.saveItem(item);
+  },
+
+  /**
+   * 添加库存变更记录
+   */
+  addHistory: function (item, delta) {
+    if (!item.history) {
+      item.history = [];
+    }
+    // 添加新记录
+    item.history.push({
+      delta: delta,
+      after: item.count,
+      time: Math.floor(Date.now() / 1000)
+    });
+    // 只保留最近20条记录
+    if (item.history.length > 20) {
+      item.history = item.history.slice(-20);
     }
   },
 
@@ -228,6 +288,12 @@ Page({
       return;
     }
 
+    // 检查存储空间
+    if (!settingsUtil.hasEnoughStorage()) {
+      wx.showToast({ title: '存储空间不足，请清理数据', icon: 'none' });
+      return;
+    }
+
     // 添加到自定义位置
     settingsUtil.addCustomLocation(newLocation);
 
@@ -304,6 +370,12 @@ Page({
       return;
     }
 
+    // 检查存储空间
+    if (!settingsUtil.hasEnoughStorage()) {
+      wx.showToast({ title: '存储空间不足，请清理数据', icon: 'none' });
+      return;
+    }
+
     // 添加到自定义分类
     settingsUtil.addCustomCategory(newCategory);
 
@@ -323,6 +395,27 @@ Page({
    */
   onNoteInput: function (e) {
     this.setData({ 'editData.note': e.detail.value });
+  },
+
+  /**
+   * 切换备注展开/收起
+   */
+  toggleNoteExpand: function () {
+    this.setData({ noteExpanded: !this.data.noteExpanded });
+  },
+
+  /**
+   * 显示单位输入框
+   */
+  showUnitFieldTap: function () {
+    this.setData({ showUnitField: true });
+  },
+
+  /**
+   * 隐藏单位输入框
+   */
+  hideUnitField: function () {
+    this.setData({ showUnitField: false, 'editData.unit': '' });
   },
 
   /**

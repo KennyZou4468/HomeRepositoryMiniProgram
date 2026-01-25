@@ -1,4 +1,22 @@
 <!--pages/detail/detail.wxml-->
+<wxs module="utils">
+  module.exports.formatTime = function(timestamp) {
+    var date = getDate(timestamp * 1000);
+    var now = getDate();
+    var diff = Math.floor((now.getTime() - date.getTime()) / 1000);
+    
+    if (diff < 60) return '刚刚';
+    if (diff < 3600) return Math.floor(diff / 60) + '分钟前';
+    if (diff < 86400) return Math.floor(diff / 3600) + '小时前';
+    if (diff < 604800) return Math.floor(diff / 86400) + '天前';
+    
+    var month = date.getMonth() + 1;
+    var day = date.getDate();
+    var hour = date.getHours();
+    var minute = date.getMinutes();
+    return month + '/' + day + ' ' + (hour < 10 ? '0' + hour : hour) + ':' + (minute < 10 ? '0' + minute : minute);
+  }
+</wxs>
 <view class="container {{darkMode ? 'theme-dark' : ''}}" wx:if="{{item}}">
   <!-- 查看模式 -->
   <view class="detail-card" wx:if="{{!isEditing}}">
@@ -33,11 +51,16 @@
     <view class="info-section">
       <view class="info-item">
         <text class="info-label">📍 存放位置</text>
-        <text class="info-value">{{item.location}}</text>
+        <text class="info-value" user-select>{{item.location}}</text>
       </view>
       <view class="info-item" wx:if="{{item.note}}">
         <text class="info-label">📝 备注</text>
-        <text class="info-value">{{item.note}}</text>
+        <view class="note-wrapper">
+          <text class="info-value note-content {{noteExpanded ? 'expanded' : 'collapsed'}}" user-select>{{item.note}}</text>
+          <view class="note-expand-btn" wx:if="{{item.note.length > 80}}" bindtap="toggleNoteExpand">
+            <text>{{noteExpanded ? '收起 ▲' : '展开 ▼'}}</text>
+          </view>
+        </view>
       </view>
     </view>
 
@@ -45,6 +68,25 @@
     <view class="action-buttons">
       <button class="btn btn-edit" bindtap="onEdit">✏️ 编辑信息</button>
       <button class="btn btn-delete" bindtap="onDelete">🗑️ 删除物品</button>
+    </view>
+
+    <!-- 库存变更记录 -->
+    <view class="history-section" wx:if="{{item.history && item.history.length > 0}}">
+      <view class="history-header">
+        <text class="history-title">📋 最近变更</text>
+        <text class="history-count">{{item.history.length}}条记录</text>
+      </view>
+      <view class="history-list">
+        <view class="history-item" wx:for="{{item.history}}" wx:key="time" wx:for-item="record">
+          <view class="history-delta {{record.delta > 0 ? 'delta-plus' : 'delta-minus'}}">
+            {{record.delta > 0 ? '+' : ''}}{{record.delta}}
+          </view>
+          <view class="history-info">
+            <text class="history-after">剩余 {{record.after}}{{item.unit || ''}}</text>
+            <text class="history-time">{{utils.formatTime(record.time)}}</text>
+          </view>
+        </view>
+      </view>
     </view>
   </view>
 
@@ -71,12 +113,13 @@
         />
       </view>
 
-      <!-- 单位 -->
-      <view class="form-item">
+      <!-- 单位（可选，可折叠） -->
+      <view class="form-item form-item-collapsible" wx:if="{{showUnitField || editData.unit}}">
         <view class="form-label">
           <text class="label-emoji">📐</text>
           <text>单位</text>
           <text class="optional">选填</text>
+          <text class="collapse-btn" bindtap="hideUnitField">收起</text>
         </view>
         <input 
           class="form-input" 
@@ -85,6 +128,10 @@
           bindinput="onUnitInput"
           maxlength="10"
         />
+      </view>
+      <view class="add-field-btn" wx:if="{{!showUnitField && !editData.unit}}" bindtap="showUnitFieldTap">
+        <text class="add-field-icon">＋</text>
+        <text class="add-field-text">添加单位</text>
       </view>
 
       <!-- 存放位置 -->
@@ -129,8 +176,7 @@
           placeholder="有什么要记住的吗？"
           value="{{editData.note}}"
           bindinput="onNoteInput"
-          maxlength="200"
-          auto-height
+          maxlength="250"
         />
       </view>
     </view>

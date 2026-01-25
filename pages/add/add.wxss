@@ -97,6 +97,7 @@
 .form-textarea {
   width: 100%;
   min-height: 140rpx;
+  max-height: 300rpx;
   padding: 24rpx 28rpx;
   font-size: 30rpx;
   color: #5a5a5a;
@@ -105,10 +106,44 @@
   box-sizing: border-box;
   line-height: 1.6;
   border: 2rpx solid #f0ebe4;
+  overflow-y: auto;
 }
 
 .form-textarea::placeholder {
   color: #c0b8ae;
+}
+
+/* 可折叠表单项 */
+.form-item-collapsible {
+  position: relative;
+}
+
+.collapse-btn {
+  margin-left: auto;
+  font-size: 24rpx;
+  color: #ff9a6c;
+  padding: 4rpx 12rpx;
+}
+
+/* 添加字段按钮 */
+.add-field-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20rpx 32rpx;
+  margin: 0 32rpx;
+  border-bottom: 1rpx solid #f5f0ea;
+}
+
+.add-field-icon {
+  font-size: 28rpx;
+  color: #ff9a6c;
+  margin-right: 8rpx;
+}
+
+.add-field-text {
+  font-size: 28rpx;
+  color: #ff9a6c;
 }
 
 /* 按钮区域 */
@@ -168,6 +203,7 @@
   height: 88rpx;
   padding: 0 28rpx;
   font-size: 30rpx;
+  line-height: 88rpx;
   background-color: #faf8f5;
   border-radius: 20rpx;
   box-sizing: border-box;
@@ -181,11 +217,17 @@
 .select-value {
   flex: 1;
   color: #5a5a5a;
+  line-height: 1;
+  display: flex;
+  align-items: center;
 }
 
 .select-placeholder {
   flex: 1;
   color: #c0b8ae;
+  line-height: 1;
+  display: flex;
+  align-items: center;
 }
 
 .select-arrow {
@@ -358,6 +400,19 @@
   color: #666666 !important;
 }
 
+.theme-dark .collapse-btn {
+  color: #ff9a6c !important;
+}
+
+.theme-dark .add-field-btn {
+  border-color: #3a3a3a !important;
+}
+
+.theme-dark .add-field-icon,
+.theme-dark .add-field-text {
+  color: #ff9a6c !important;
+}
+
 .theme-dark .form-input,
 .theme-dark .form-textarea {
   background-color: #333333 !important;
@@ -410,6 +465,11 @@
 
 .theme-dark .picker-close {
   color: #888888 !important;
+  background-color: #444444 !important;
+}
+
+.theme-dark .picker-list {
+  background-color: #2a2a2a !important;
 }
 
 .theme-dark .picker-item {
@@ -423,6 +483,7 @@
 
 .theme-dark .picker-add {
   border-color: #3a3a3a !important;
+  background-color: #2a2a2a !important;
 }
 
 .theme-dark .picker-add-input {

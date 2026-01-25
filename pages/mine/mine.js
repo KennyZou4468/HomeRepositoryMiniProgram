@@ -17,16 +17,25 @@ Page({
         showLocationInput: false,
         showCategoryInput: false,
         newLocation: '',
-        newCategory: ''
+        newCategory: '',
+        // 存储信息
+        storageUnit: 'MB', // MB 或 KB
+        storageUsedMB: '0.00',
+        storageUsedKB: '0',
+        storageLimitMB: '10',
+        storageLimitKB: '10240',
+        storagePercentage: '0.0'
     },
 
     onLoad: function () {
         this.loadSettings();
+        this.loadStorageInfo();
         this.updateThemeState();
     },
 
     onShow: function () {
         this.loadSettings();
+        this.loadStorageInfo();
         this.updateThemeState();
     },
 
@@ -37,6 +46,41 @@ Page({
         const app = getApp();
         const actualTheme = app.getActualTheme ? app.getActualTheme() : 'light';
         this.setData({ darkMode: actualTheme === 'dark' });
+
+        // 同步更新导航栏颜色
+        if (actualTheme === 'dark') {
+            wx.setNavigationBarColor({
+                frontColor: '#ffffff',
+                backgroundColor: '#1a1a1a'
+            });
+        } else {
+            wx.setNavigationBarColor({
+                frontColor: '#000000',
+                backgroundColor: '#ffffff'
+            });
+        }
+    },
+
+    /**
+     * 加载存储信息
+     */
+    loadStorageInfo: function () {
+        const info = settingsUtil.getStorageInfo();
+        this.setData({
+            storageUsedMB: info.usedMB,
+            storageUsedKB: info.usedKB.toString(),
+            storageLimitMB: info.limitMB,
+            storageLimitKB: info.limitKB.toString(),
+            storagePercentage: info.percentage
+        });
+    },
+
+    /**
+     * 切换存储单位
+     */
+    toggleStorageUnit: function () {
+        const newUnit = this.data.storageUnit === 'MB' ? 'KB' : 'MB';
+        this.setData({ storageUnit: newUnit });
     },
 
     /**
@@ -75,6 +119,74 @@ Page({
     },
 
     /**
+     * 清除所有数据（一键清除）
+     */
+    onClearAllData: function () {
+        wx.showModal({
+            title: '⚠️ 确认清除',
+            content: '这将清除所有物品记录和自定义设置，此操作不可恢复！',
+            confirmText: '确认清除',
+            confirmColor: '#d4847a',
+            success: (res) => {
+                if (res.confirm) {
+                    // 二次确认
+                    wx.showModal({
+                        title: '再次确认',
+                        content: '真的要删除所有数据吗？',
+                        confirmText: '删除',
+                        confirmColor: '#d4847a',
+                        success: (res2) => {
+                            if (res2.confirm) {
+                                if (settingsUtil.clearAllData()) {
+                                    this.loadSettings();
+                                    this.loadStorageInfo();
+                                    wx.showToast({
+                                        title: '已清除所有数据',
+                                        icon: 'success'
+                                    });
+                                } else {
+                                    wx.showToast({
+                                        title: '清除失败',
+                                        icon: 'none'
+                                    });
+                                }
+                            }
+                        }
+                    });
+                }
+            }
+        });
+    },
+
+    /**
+     * 仅清除物品数据
+     */
+    onClearItemsData: function () {
+        wx.showModal({
+            title: '确认清除',
+            content: '这将清除所有物品记录，但保留自定义位置和分类设置。',
+            confirmText: '确认清除',
+            confirmColor: '#d4847a',
+            success: (res) => {
+                if (res.confirm) {
+                    if (settingsUtil.clearItemsData()) {
+                        this.loadStorageInfo();
+                        wx.showToast({
+                            title: '已清除物品数据',
+                            icon: 'success'
+                        });
+                    } else {
+                        wx.showToast({
+                            title: '清除失败',
+                            icon: 'none'
+                        });
+                    }
+                }
+            }
+        });
+    },
+
+    /**
      * 显示添加位置输入框
      */
     showAddLocation: function () {
@@ -104,8 +216,14 @@ Page({
             wx.showToast({ title: '请输入位置名称', icon: 'none' });
             return;
         }
+        // 检查存储空间
+        if (!settingsUtil.hasEnoughStorage()) {
+            wx.showToast({ title: '存储空间不足，请清理数据', icon: 'none' });
+            return;
+        }
         if (settingsUtil.addCustomLocation(location)) {
             this.loadSettings();
+            this.loadStorageInfo();
             this.setData({ showLocationInput: false, newLocation: '' });
             wx.showToast({ title: '添加成功～', icon: 'success' });
         } else {
@@ -163,8 +281,14 @@ Page({
             wx.showToast({ title: '请输入分类名称', icon: 'none' });
             return;
         }
+        // 检查存储空间
+        if (!settingsUtil.hasEnoughStorage()) {
+            wx.showToast({ title: '存储空间不足，请清理数据', icon: 'none' });
+            return;
+        }
         if (settingsUtil.addCustomCategory(category)) {
             this.loadSettings();
+            this.loadStorageInfo();
             this.setData({ showCategoryInput: false, newCategory: '' });
             wx.showToast({ title: '添加成功～', icon: 'success' });
         } else {

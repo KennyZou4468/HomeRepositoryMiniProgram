@@ -247,6 +247,148 @@
   height: 40rpx;
 }
 
+/* ========== 存储管理样式 ========== */
+.storage-info {
+  padding: 20rpx 0;
+}
+
+.storage-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16rpx;
+}
+
+.storage-label {
+  font-size: 28rpx;
+  color: #666666;
+}
+
+.storage-value-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8rpx;
+  padding: 8rpx 16rpx;
+  background-color: #f5f0ea;
+  border-radius: 12rpx;
+  transition: background-color 0.2s;
+}
+
+.storage-value-wrapper:active {
+  background-color: #ebe6e0;
+}
+
+.storage-value {
+  font-size: 28rpx;
+  color: #5a5a5a;
+  font-weight: 500;
+}
+
+.storage-unit-toggle {
+  font-size: 20rpx;
+}
+
+.storage-hint {
+  display: block;
+  margin-top: 12rpx;
+  font-size: 22rpx;
+  color: #aaa;
+}
+
+.storage-bar-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+}
+
+.storage-bar {
+  flex: 1;
+  height: 16rpx;
+  background-color: #f0ebe4;
+  border-radius: 8rpx;
+  overflow: hidden;
+}
+
+.storage-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #a8d5a2 0%, #8ec587 100%);
+  border-radius: 8rpx;
+  transition: width 0.3s ease;
+}
+
+.storage-bar-fill.warning {
+  background: linear-gradient(90deg, #ffb88e 0%, #ff9a6c 100%);
+}
+
+.storage-percentage {
+  font-size: 24rpx;
+  color: #888888;
+  min-width: 60rpx;
+  text-align: right;
+}
+
+.storage-tip {
+  display: block;
+  margin-top: 16rpx;
+  font-size: 24rpx;
+  color: #e6995c;
+  background-color: #fff5eb;
+  padding: 12rpx 16rpx;
+  border-radius: 8rpx;
+}
+
+.storage-actions {
+  display: flex;
+  gap: 20rpx;
+  margin-top: 24rpx;
+  padding-top: 24rpx;
+  border-top: 1rpx dashed #f0ebe4;
+}
+
+.storage-btn {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24rpx 16rpx;
+  border-radius: 16rpx;
+  transition: all 0.2s ease;
+}
+
+.storage-btn-items {
+  background-color: #f5f0ea;
+}
+
+.storage-btn-items:active {
+  background-color: #ebe6e0;
+  transform: scale(0.98);
+}
+
+.storage-btn-all {
+  background-color: #fff5f3;
+  border: 2rpx solid #f0d4cf;
+}
+
+.storage-btn-all:active {
+  background-color: #ffefec;
+  transform: scale(0.98);
+}
+
+.storage-btn-icon {
+  font-size: 40rpx;
+  margin-bottom: 8rpx;
+}
+
+.storage-btn-text {
+  font-size: 24rpx;
+  color: #666666;
+}
+
+.storage-btn-all .storage-btn-text {
+  color: #d4847a;
+}
+
 /* ========== 暗色主题样式 ========== */
 .theme-dark {
   background: linear-gradient(180deg, #1a1a1a 0%, #252525 100%) !important;
@@ -317,4 +459,67 @@
 
 .theme-dark .add-input-cancel {
   color: #888888 !important;
+}
+
+/* 存储管理暗色主题 */
+.theme-dark .storage-label {
+  color: #888888 !important;
+}
+
+.theme-dark .storage-value-wrapper {
+  background-color: #333333 !important;
+}
+
+.theme-dark .storage-value-wrapper:active {
+  background-color: #444444 !important;
+}
+
+.theme-dark .storage-value {
+  color: #d0d0d0 !important;
+}
+
+.theme-dark .storage-hint {
+  color: #666666 !important;
+}
+
+.theme-dark .storage-bar {
+  background-color: #444444 !important;
+}
+
+.theme-dark .storage-percentage {
+  color: #888888 !important;
+}
+
+.theme-dark .storage-tip {
+  background-color: #3d3025 !important;
+  color: #e6995c !important;
+}
+
+.theme-dark .storage-actions {
+  border-color: #3a3a3a !important;
+}
+
+.theme-dark .storage-btn-items {
+  background-color: #333333 !important;
+}
+
+.theme-dark .storage-btn-items:active {
+  background-color: #444444 !important;
+}
+
+.theme-dark .storage-btn-all {
+  background-color: #3a2a2a !important;
+  border-color: #5a3a3a !important;
+}
+
+.theme-dark .storage-btn-all:active {
+  background-color: #4a3a3a !important;
+}
+
+.theme-dark .storage-btn-text {
+  color: #a0a0a0 !important;
+}
+
+.theme-dark .storage-btn-all .storage-btn-text {
+  color: #d4847a !important;
 }

@@ -39,12 +39,13 @@
       />
     </view>
 
-    <!-- 单位（可选） -->
-    <view class="form-item">
+    <!-- 单位（可选，可折叠） -->
+    <view class="form-item form-item-collapsible" wx:if="{{showUnitField}}">
       <view class="form-label">
         <text class="label-emoji">📐</text>
         <text>单位</text>
         <text class="optional">选填</text>
+        <text class="collapse-btn" bindtap="hideUnitField">收起</text>
       </view>
       <input 
         class="form-input" 
@@ -53,6 +54,10 @@
         bindinput="onUnitInput"
         maxlength="10"
       />
+    </view>
+    <view class="add-field-btn" wx:if="{{!showUnitField}}" bindtap="showUnitFieldTap">
+      <text class="add-field-icon">＋</text>
+      <text class="add-field-text">添加单位</text>
     </view>
 
     <!-- 存放位置（必填） -->
@@ -97,8 +102,7 @@
         placeholder="有什么要记住的吗？"
         value="{{note}}"
         bindinput="onNoteInput"
-        maxlength="200"
-        auto-height
+        maxlength="250"
       />
     </view>
   </view>
