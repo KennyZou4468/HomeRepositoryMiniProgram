@@ -1,0 +1,124 @@
+/* app.wxss - 全局样式 */
+
+page {
+  background-color: #faf8f5;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-size: 28rpx;
+  line-height: 1.5;
+  color: #5a5a5a;
+}
+
+/* 暗色主题 - page 级别 */
+page.theme-dark {
+  background-color: #1a1a1a;
+  color: #e0e0e0;
+}
+
+/* 通用样式 */
+.container {
+  box-sizing: border-box;
+}
+
+/* 暗色主题容器 */
+.container.theme-dark {
+  background: linear-gradient(180deg, #1a1a1a 0%, #252525 100%) !important;
+}
+
+/* 清除按钮默认样式 */
+button::after {
+  border: none;
+}
+
+button {
+  margin: 0;
+  padding: 0;
+  background-color: transparent;
+}
+
+/* ========== 暗色主题通用样式 ========== */
+.theme-dark .card,
+.theme-dark .detail-card,
+.theme-dark .edit-card,
+.theme-dark .section {
+  background-color: #2a2a2a !important;
+  border-color: #3a3a3a !important;
+}
+
+.theme-dark .item-name,
+.theme-dark .page-title,
+.theme-dark .section-title,
+.theme-dark .edit-title,
+.theme-dark .picker-title {
+  color: #f0f0f0 !important;
+}
+
+.theme-dark .item-location,
+.theme-dark .item-category,
+.theme-dark .page-subtitle,
+.theme-dark .subsection-title,
+.theme-dark .info-label,
+.theme-dark .form-label,
+.theme-dark .count-label {
+  color: #a0a0a0 !important;
+}
+
+.theme-dark .form-input,
+.theme-dark .form-textarea,
+.theme-dark .form-select,
+.theme-dark .add-input {
+  background-color: #333333 !important;
+  border-color: #444444 !important;
+  color: #e0e0e0 !important;
+}
+
+.theme-dark .form-input::placeholder,
+.theme-dark .form-textarea::placeholder,
+.theme-dark .add-input::placeholder {
+  color: #666666 !important;
+}
+
+.theme-dark .tag-preset {
+  background-color: #3a3a3a !important;
+  color: #c0c0c0 !important;
+}
+
+.theme-dark .tag-custom {
+  background-color: #3d3530 !important;
+  color: #ffb88e !important;
+}
+
+.theme-dark .info-value {
+  background-color: #333333 !important;
+  color: #d0d0d0 !important;
+}
+
+.theme-dark .count-section {
+  background: linear-gradient(135deg, #2a2a2a 0%, #333333 100%) !important;
+  border-color: #3a3a3a !important;
+}
+
+.theme-dark .count-value {
+  color: #8ecf87 !important;
+}
+
+.theme-dark .picker-popup {
+  background-color: #2a2a2a !important;
+}
+
+.theme-dark .picker-item {
+  color: #d0d0d0 !important;
+}
+
+.theme-dark .picker-item:active,
+.theme-dark .picker-item.selected {
+  background-color: #333333 !important;
+}
+
+.theme-dark .picker-add-section {
+  background-color: #252525 !important;
+  border-color: #3a3a3a !important;
+}
+
+.theme-dark .empty-tip {
+  color: #666666 !important;
+}

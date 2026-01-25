@@ -1,0 +1,134 @@
+<!--pages/mine/mine.wxml-->
+<view class="container {{darkMode ? 'theme-dark' : ''}}">
+  <!-- 页面标题 -->
+  <view class="page-header">
+    <text class="page-title">⚙️ 我的设置</text>
+    <text class="page-subtitle">让小程序更懂你的家～</text>
+  </view>
+
+  <!-- 显示模式 -->
+  <view class="section">
+    <view class="section-title">
+      <text class="section-icon">🌓</text>
+      <text>显示模式</text>
+    </view>
+    <view class="theme-options">
+      <view 
+        class="theme-option {{theme === item.value ? 'active' : ''}}"
+        wx:for="{{themeOptions}}"
+        wx:key="value"
+        data-theme="{{item.value}}"
+        bindtap="onThemeChange"
+      >
+        <text class="theme-icon">{{item.value === 'system' ? '📱' : (item.value === 'light' ? '☀️' : '🌙')}}</text>
+        <text class="theme-label">{{item.label}}</text>
+        <view class="theme-check" wx:if="{{theme === item.value}}">✓</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 存放位置管理 -->
+  <view class="section">
+    <view class="section-title">
+      <text class="section-icon">📍</text>
+      <text>存放位置</text>
+    </view>
+    
+    <!-- 系统预设 -->
+    <view class="subsection">
+      <text class="subsection-title">系统预设</text>
+      <view class="tag-list">
+        <view class="tag tag-preset" wx:for="{{presetLocations}}" wx:key="*this">
+          <text>{{item}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 自定义位置 -->
+    <view class="subsection">
+      <text class="subsection-title">我的自定义</text>
+      <view class="tag-list" wx:if="{{customLocations.length > 0}}">
+        <view class="tag tag-custom" wx:for="{{customLocations}}" wx:key="*this">
+          <text>{{item}}</text>
+          <text class="tag-delete" data-location="{{item}}" catchtap="deleteLocation">✕</text>
+        </view>
+      </view>
+      <view class="empty-tip" wx:if="{{customLocations.length === 0}}">
+        <text>还没有自定义位置哦～</text>
+      </view>
+      
+      <!-- 添加位置 -->
+      <view class="add-input-wrapper" wx:if="{{showLocationInput}}">
+        <input 
+          class="add-input" 
+          placeholder="输入新位置名称..."
+          value="{{newLocation}}"
+          bindinput="onLocationInput"
+          focus="{{showLocationInput}}"
+          maxlength="20"
+        />
+        <view class="add-input-btns">
+          <text class="add-input-cancel" bindtap="hideAddLocation">取消</text>
+          <text class="add-input-confirm" bindtap="confirmAddLocation">确定</text>
+        </view>
+      </view>
+      <view class="add-btn" wx:if="{{!showLocationInput}}" bindtap="showAddLocation">
+        <text>➕ 添加位置</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 物品分类管理 -->
+  <view class="section">
+    <view class="section-title">
+      <text class="section-icon">🏷️</text>
+      <text>物品分类</text>
+    </view>
+    
+    <!-- 系统预设 -->
+    <view class="subsection">
+      <text class="subsection-title">系统预设</text>
+      <view class="tag-list">
+        <view class="tag tag-preset" wx:for="{{presetCategories}}" wx:key="*this">
+          <text>{{item}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 自定义分类 -->
+    <view class="subsection">
+      <text class="subsection-title">我的自定义</text>
+      <view class="tag-list" wx:if="{{customCategories.length > 0}}">
+        <view class="tag tag-custom" wx:for="{{customCategories}}" wx:key="*this">
+          <text>{{item}}</text>
+          <text class="tag-delete" data-category="{{item}}" catchtap="deleteCategory">✕</text>
+        </view>
+      </view>
+      <view class="empty-tip" wx:if="{{customCategories.length === 0}}">
+        <text>还没有自定义分类哦～</text>
+      </view>
+      
+      <!-- 添加分类 -->
+      <view class="add-input-wrapper" wx:if="{{showCategoryInput}}">
+        <input 
+          class="add-input" 
+          placeholder="输入新分类名称..."
+          value="{{newCategory}}"
+          bindinput="onCategoryInput"
+          focus="{{showCategoryInput}}"
+          maxlength="20"
+        />
+        <view class="add-input-btns">
+          <text class="add-input-cancel" bindtap="hideAddCategory">取消</text>
+          <text class="add-input-confirm" bindtap="confirmAddCategory">确定</text>
+        </view>
+      </view>
+      <view class="add-btn" wx:if="{{!showCategoryInput}}" bindtap="showAddCategory">
+        <text>➕ 添加分类</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 底部留白 -->
+  <view class="footer-space"></view>
+</view>

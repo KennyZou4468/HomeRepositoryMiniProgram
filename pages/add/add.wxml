@@ -1,0 +1,187 @@
+<!--pages/add/add.wxml-->
+<view class="container {{darkMode ? 'theme-dark' : ''}}">
+  <!-- 页面标题 -->
+  <view class="page-header">
+    <text class="page-title">🧺 添加一个新物品</text>
+    <text class="page-subtitle">记录下来，下次找东西就方便啦～</text>
+  </view>
+
+  <view class="form">
+    <!-- 物品名称（必填） -->
+    <view class="form-item">
+      <view class="form-label">
+        <text class="label-emoji">📦</text>
+        <text>物品名称</text>
+        <text class="required">*</text>
+      </view>
+      <input 
+        class="form-input" 
+        placeholder="这是什么物品呀？"
+        value="{{name}}"
+        bindinput="onNameInput"
+        maxlength="50"
+      />
+    </view>
+
+    <!-- 数量 -->
+    <view class="form-item">
+      <view class="form-label">
+        <text class="label-emoji">🔢</text>
+        <text>数量</text>
+      </view>
+      <input 
+        class="form-input" 
+        type="number"
+        placeholder="有多少个？（默认 1）"
+        value="{{count}}"
+        bindinput="onCountInput"
+        maxlength="10"
+      />
+    </view>
+
+    <!-- 单位（可选） -->
+    <view class="form-item">
+      <view class="form-label">
+        <text class="label-emoji">📐</text>
+        <text>单位</text>
+        <text class="optional">选填</text>
+      </view>
+      <input 
+        class="form-input" 
+        placeholder="个、件、盒、瓶..."
+        value="{{unit}}"
+        bindinput="onUnitInput"
+        maxlength="10"
+      />
+    </view>
+
+    <!-- 存放位置（必填） -->
+    <view class="form-item">
+      <view class="form-label">
+        <text class="label-emoji">📍</text>
+        <text>存放位置</text>
+        <text class="required">*</text>
+      </view>
+      <view class="form-select" bindtap="showLocationPicker">
+        <text class="{{location ? 'select-value' : 'select-placeholder'}}">
+          {{location || '点击选择存放位置'}}
+        </text>
+        <text class="select-arrow">›</text>
+      </view>
+    </view>
+
+    <!-- 分类（可选） -->
+    <view class="form-item">
+      <view class="form-label">
+        <text class="label-emoji">🏷️</text>
+        <text>分类</text>
+        <text class="optional">选填</text>
+      </view>
+      <view class="form-select" bindtap="showCategoryPicker">
+        <text class="{{category ? 'select-value' : 'select-placeholder'}}">
+          {{category || '点击选择分类'}}
+        </text>
+        <text class="select-arrow">›</text>
+      </view>
+    </view>
+
+    <!-- 备注（可选） -->
+    <view class="form-item">
+      <view class="form-label">
+        <text class="label-emoji">📝</text>
+        <text>备注</text>
+        <text class="optional">选填</text>
+      </view>
+      <textarea 
+        class="form-textarea" 
+        placeholder="有什么要记住的吗？"
+        value="{{note}}"
+        bindinput="onNoteInput"
+        maxlength="200"
+        auto-height
+      />
+    </view>
+  </view>
+
+  <!-- 按钮区域 -->
+  <view class="button-group">
+    <button class="btn btn-cancel" bindtap="onCancel">返回</button>
+    <button class="btn btn-save" bindtap="onSave">✓ 保存到家里</button>
+  </view>
+</view>
+
+<!-- 位置选择弹窗 -->
+<view class="picker-mask" wx:if="{{showLocationPicker}}" bindtap="hideLocationPicker"></view>
+<view class="picker-popup" wx:if="{{showLocationPicker}}">
+  <view class="picker-header">
+    <text class="picker-title">📍 选择存放位置</text>
+    <text class="picker-close" bindtap="hideLocationPicker">✕</text>
+  </view>
+  <scroll-view class="picker-list" scroll-y>
+    <view 
+      class="picker-item {{location === item ? 'active' : ''}}"
+      wx:for="{{allLocations}}"
+      wx:key="*this"
+      data-location="{{item}}"
+      bindtap="selectLocation"
+    >
+      <text>{{item}}</text>
+      <text class="picker-check" wx:if="{{location === item}}">✓</text>
+    </view>
+  </scroll-view>
+  <!-- 添加自定义位置 -->
+  <view class="picker-add" wx:if="{{!showAddLocationInput}}" bindtap="showAddLocationInput">
+    <text>➕ 添加自定义位置</text>
+  </view>
+  <view class="picker-add-input" wx:if="{{showAddLocationInput}}">
+    <input 
+      class="add-input" 
+      placeholder="输入新位置..."
+      value="{{newLocationInput}}"
+      bindinput="onNewLocationInput"
+      focus="{{showAddLocationInput}}"
+    />
+    <text class="add-confirm" bindtap="confirmAddLocation">确定</text>
+  </view>
+</view>
+
+<!-- 分类选择弹窗 -->
+<view class="picker-mask" wx:if="{{showCategoryPicker}}" bindtap="hideCategoryPicker"></view>
+<view class="picker-popup" wx:if="{{showCategoryPicker}}">
+  <view class="picker-header">
+    <text class="picker-title">🏷️ 选择物品分类</text>
+    <text class="picker-close" bindtap="hideCategoryPicker">✕</text>
+  </view>
+  <scroll-view class="picker-list" scroll-y>
+    <view 
+      class="picker-item"
+      bindtap="clearCategory"
+    >
+      <text class="picker-item-clear">不选择分类</text>
+    </view>
+    <view 
+      class="picker-item {{category === item ? 'active' : ''}}"
+      wx:for="{{allCategories}}"
+      wx:key="*this"
+      data-category="{{item}}"
+      bindtap="selectCategory"
+    >
+      <text>{{item}}</text>
+      <text class="picker-check" wx:if="{{category === item}}">✓</text>
+    </view>
+  </scroll-view>
+  <!-- 添加自定义分类 -->
+  <view class="picker-add" wx:if="{{!showAddCategoryInput}}" bindtap="showAddCategoryInput">
+    <text>➕ 添加自定义分类</text>
+  </view>
+  <view class="picker-add-input" wx:if="{{showAddCategoryInput}}">
+    <input 
+      class="add-input" 
+      placeholder="输入新分类..."
+      value="{{newCategoryInput}}"
+      bindinput="onNewCategoryInput"
+      focus="{{showAddCategoryInput}}"
+    />
+    <text class="add-confirm" bindtap="confirmAddCategory">确定</text>
+  </view>
+</view>

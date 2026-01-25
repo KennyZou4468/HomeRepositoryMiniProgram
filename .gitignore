@@ -1,0 +1,17 @@
+# WeChat Mini Program
+node_modules/
+dist/
+.env
+
+# WeChat IDE
+.project
+.svn/
+.DS_Store
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS
+Thumbs.db

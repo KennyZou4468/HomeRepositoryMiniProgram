@@ -1,0 +1,366 @@
+/* pages/index/index.wxss */
+
+.container {
+  padding: 30rpx;
+  padding-bottom: 160rpx;
+  background: linear-gradient(180deg, #fff9f0 0%, #faf8f5 100%);
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+/* 页面标题 */
+.page-header {
+  text-align: center;
+  padding: 20rpx 0 30rpx;
+}
+
+.page-title {
+  font-size: 44rpx;
+  font-weight: 600;
+  color: #4a4a4a;
+  display: block;
+}
+
+.page-subtitle {
+  font-size: 26rpx;
+  color: #999;
+  margin-top: 8rpx;
+  display: block;
+}
+
+/* 搜索框样式 */
+.search-box {
+  display: flex;
+  align-items: center;
+  background-color: #ffffff;
+  border-radius: 50rpx;
+  padding: 20rpx 30rpx;
+  margin-bottom: 30rpx;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.06);
+  border: 2rpx solid #f0ebe4;
+}
+
+.search-emoji {
+  font-size: 32rpx;
+  margin-right: 16rpx;
+}
+
+.search-input {
+  flex: 1;
+  font-size: 28rpx;
+  color: #5a5a5a;
+}
+
+.search-input::placeholder {
+  color: #c0b8ae;
+}
+
+.clear-btn {
+  width: 40rpx;
+  height: 40rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #e8e4df;
+  border-radius: 50%;
+  margin-left: 16rpx;
+}
+
+.clear-btn text {
+  font-size: 24rpx;
+  color: #999;
+}
+
+/* 物品列表 */
+.item-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+}
+
+/* 物品卡片 */
+.item-card {
+  display: flex;
+  align-items: center;
+  background-color: #ffffff;
+  border-radius: 24rpx;
+  padding: 28rpx 24rpx;
+  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.05);
+  border: 2rpx solid #f5f0ea;
+  transition: all 0.2s ease;
+}
+
+.item-card:active {
+  transform: scale(0.98);
+  background-color: #fffcf8;
+}
+
+.card-main {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.card-icon {
+  font-size: 44rpx;
+  margin-right: 20rpx;
+}
+
+.card-info {
+  flex: 1;
+  overflow: hidden;
+}
+
+.card-name {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #4a4a4a;
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.card-location {
+  display: flex;
+  align-items: center;
+  margin-top: 8rpx;
+}
+
+.location-icon {
+  font-size: 24rpx;
+  margin-right: 6rpx;
+}
+
+.location-text {
+  font-size: 26rpx;
+  color: #999;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.card-count-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  margin-left: 20rpx;
+}
+
+.card-count {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #5a9b7a;
+  background-color: #e8f5ee;
+  padding: 8rpx 20rpx;
+  border-radius: 20rpx;
+}
+
+.low-count {
+  color: #e6995c;
+  background-color: #fff5eb;
+}
+
+.low-count-tip {
+  font-size: 22rpx;
+  color: #e6995c;
+  margin-top: 6rpx;
+}
+
+.card-arrow {
+  font-size: 36rpx;
+  color: #d0c8be;
+  margin-left: 12rpx;
+}
+
+/* 搜索无结果 */
+.no-result {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 100rpx 40rpx;
+  background-color: #ffffff;
+  border-radius: 24rpx;
+  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.05);
+}
+
+.no-result-emoji {
+  font-size: 64rpx;
+  margin-bottom: 20rpx;
+}
+
+.no-result-text {
+  font-size: 30rpx;
+  color: #666;
+  text-align: center;
+}
+
+.no-result-hint {
+  font-size: 26rpx;
+  color: #aaa;
+  margin-top: 12rpx;
+}
+
+/* 空状态 */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 140rpx 40rpx;
+  background-color: #ffffff;
+  border-radius: 24rpx;
+  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.05);
+}
+
+.empty-icon {
+  font-size: 100rpx;
+  margin-bottom: 30rpx;
+}
+
+.empty-title {
+  font-size: 32rpx;
+  color: #5a5a5a;
+  margin-bottom: 16rpx;
+}
+
+.empty-subtitle {
+  font-size: 26rpx;
+  color: #aaa;
+}
+
+/* 新增物品按钮 */
+.add-button {
+  position: fixed;
+  bottom: 50rpx;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #ffb88e 0%, #ff9a6c 100%);
+  color: #ffffff;
+  padding: 28rpx 56rpx;
+  border-radius: 50rpx;
+  box-shadow: 0 10rpx 30rpx rgba(255, 152, 108, 0.4);
+  transition: all 0.2s ease;
+}
+
+.add-button:active {
+  transform: translateX(-50%) scale(0.96);
+  box-shadow: 0 6rpx 20rpx rgba(255, 152, 108, 0.4);
+}
+
+.add-icon {
+  font-size: 32rpx;
+  margin-right: 12rpx;
+}
+
+.add-text {
+  font-size: 32rpx;
+  font-weight: 600;
+}
+
+/* ========== 暗色主题样式 ========== */
+.theme-dark {
+  background: linear-gradient(180deg, #1a1a1a 0%, #252525 100%) !important;
+}
+
+.theme-dark .page-title {
+  color: #f0f0f0 !important;
+}
+
+.theme-dark .page-subtitle {
+  color: #888888 !important;
+}
+
+.theme-dark .search-box {
+  background-color: #2a2a2a !important;
+  border-color: #3a3a3a !important;
+}
+
+.theme-dark .search-input {
+  color: #e0e0e0 !important;
+}
+
+.theme-dark .search-input::placeholder {
+  color: #666666 !important;
+}
+
+.theme-dark .clear-btn {
+  background-color: #444444 !important;
+  color: #888888 !important;
+}
+
+.theme-dark .item-card {
+  background-color: #2a2a2a !important;
+  border-color: #3a3a3a !important;
+}
+
+.theme-dark .item-card:active {
+  background-color: #333333 !important;
+}
+
+.theme-dark .card-name {
+  color: #f0f0f0 !important;
+}
+
+.theme-dark .card-location,
+.theme-dark .card-category {
+  color: #a0a0a0 !important;
+}
+
+.theme-dark .card-count {
+  color: #8ecf87 !important;
+}
+
+.theme-dark .card-count.low-count {
+  color: #e6995c !important;
+}
+
+.theme-dark .low-count-tip {
+  color: #e6995c !important;
+}
+
+.theme-dark .card-arrow {
+  color: #666666 !important;
+}
+
+.theme-dark .no-result-text,
+.theme-dark .no-result-hint {
+  color: #888888 !important;
+}
+
+.theme-dark .empty-icon,
+.theme-dark .empty-title,
+.theme-dark .empty-subtitle {
+  color: #888888 !important;
+}
+
+.theme-dark .item-name {
+  color: #f0f0f0 !important;
+}
+
+.theme-dark .item-location,
+.theme-dark .item-category,
+.theme-dark .item-note {
+  color: #a0a0a0 !important;
+}
+
+.theme-dark .item-count {
+  color: #8ecf87 !important;
+}
+
+.theme-dark .item-count.low {
+  color: #e6995c !important;
+}
+
+.theme-dark .empty-box {
+  color: #888888 !important;
+}
+
+.theme-dark .empty-text,
+.theme-dark .empty-subtitle {
+  color: #888888 !important;
+}
