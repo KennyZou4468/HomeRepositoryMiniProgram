@@ -1,0 +1,50 @@
+.tab-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100rpx;
+    display: flex;
+    background-color: #ffffff;
+    border-top: 1rpx solid #f0ebe4;
+    padding-bottom: env(safe-area-inset-bottom);
+    z-index: 999;
+}
+
+.tab-bar-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 10rpx 0;
+}
+
+.tab-bar-icon {
+    width: 48rpx;
+    height: 48rpx;
+    margin-bottom: 6rpx;
+}
+
+.tab-bar-text {
+    font-size: 24rpx;
+    color: #999999;
+}
+
+.tab-bar-text.selected {
+    color: #ff9a6c;
+}
+
+/* 暗色主题 */
+.tab-bar.theme-dark {
+    background-color: #1a1a1a;
+    border-top-color: #333333;
+}
+
+.tab-bar.theme-dark .tab-bar-text {
+    color: #888888;
+}
+
+.tab-bar.theme-dark .tab-bar-text.selected {
+    color: #ff9a6c;
+}

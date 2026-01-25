@@ -1,39 +1,22 @@
-<!--pages/index/index.wxml-->
-<view class="container {{darkMode ? 'theme-dark' : ''}}">
+<!-- pages/index/index.wxml -->
+<view class="container {{darkMode ? 'theme-dark' : ''}} page-enter">
   <!-- 页面标题 -->
   <view class="page-header">
     <text class="page-title">🏠 我的家</text>
     <text class="page-subtitle">记录家里的每一件小物品</text>
   </view>
-
   <!-- 搜索框 -->
   <view class="search-box">
     <text class="search-emoji">🔍</text>
-    <input 
-      class="search-input" 
-      placeholder="搜索物品、位置或备注..." 
-      value="{{searchText}}"
-      bindinput="onSearchInput"
-    />
-    <view 
-      wx:if="{{searchText}}" 
-      class="clear-btn"
-      bindtap="onClearSearch"
-    >
+    <input class="search-input" placeholder="搜索物品、位置或备注..." value="{{searchText}}" bindinput="onSearchInput" />
+    <view wx:if="{{searchText}}" class="clear-btn" bindtap="onClearSearch">
       <text>✕</text>
     </view>
   </view>
-
   <!-- 物品列表 -->
   <view class="item-list" wx:if="{{filteredItems.length > 0}}">
-    <!-- 列表项 - 卡片式 -->
-    <view 
-      class="item-card" 
-      wx:for="{{filteredItems}}" 
-      wx:key="id"
-      data-id="{{item.id}}"
-      bindtap="onItemTap"
-    >
+    <!-- 列表项 - 卡片式，逐条淡入动画 -->
+    <view class="item-card card-animate" style="animation-delay: {{index * 50}}ms;" wx:for="{{filteredItems}}" wx:key="id" data-id="{{item.id}}" bindtap="onItemTap">
       <view class="card-main">
         <view class="card-icon">📦</view>
         <view class="card-info">
@@ -44,30 +27,27 @@
           </view>
         </view>
         <view class="card-count-wrapper">
-          <text class="card-count {{item.count <= 2 ? 'low-count' : ''}}">
+          <view class="card-count {{item.count <= 2 ? 'low-count' : ''}}">
             {{item.count}}{{item.unit ? item.unit : ''}}
-          </text>
+          </view>
           <text class="low-count-tip" wx:if="{{item.count <= 2}}">快用完啦～</text>
         </view>
       </view>
       <view class="card-arrow">›</view>
     </view>
   </view>
-
   <!-- 搜索无结果 -->
   <view class="no-result" wx:if="{{filteredItems.length === 0 && searchText && items.length > 0}}">
     <text class="no-result-emoji">🤔</text>
     <text class="no-result-text">没有找到「{{searchText}}」相关的物品</text>
     <text class="no-result-hint">换个关键词试试？</text>
   </view>
-
   <!-- 空状态 -->
   <view class="empty-state" wx:if="{{isEmpty && !searchText}}">
     <text class="empty-icon">🏡</text>
     <text class="empty-title">家里还没有记录物品哦～</text>
     <text class="empty-subtitle">先加一个吧，让生活更有条理 ✨</text>
   </view>
-
   <!-- 新增物品按钮 -->
   <view class="add-button" bindtap="onAddItem">
     <text class="add-icon">➕</text>

@@ -11,6 +11,8 @@ Page({
     },
 
     onLoad: function () {
+        // 首次加载时立即设置主题状态，避免页面闪烁
+        this.updateThemeState();
         this.loadItems();
     },
 
@@ -19,6 +21,22 @@ Page({
         this.loadItems();
         // 更新主题状态
         this.updateThemeState();
+        // 更新自定义tabBar状态
+        this.updateTabBar();
+    },
+
+    /**
+     * 更新自定义tabBar状态
+     */
+    updateTabBar: function () {
+        if (typeof this.getTabBar === 'function' && this.getTabBar()) {
+            const app = getApp();
+            const actualTheme = app.getActualTheme ? app.getActualTheme() : 'light';
+            this.getTabBar().setData({
+                selected: 0,
+                darkMode: actualTheme === 'dark'
+            });
+        }
     },
 
     /**
@@ -80,7 +98,7 @@ Page({
 
     /**
      * 根据关键词过滤物品列表
-     * 匹配字段：name, location, note
+     * 匹配字段：name, location, category, note
      */
     filterItems: function (keyword) {
         if (!keyword || keyword.trim() === '') {
@@ -95,9 +113,11 @@ Page({
         const filtered = this.data.items.filter(item => {
             const name = (item.name || '').toLowerCase();
             const location = (item.location || '').toLowerCase();
+            const category = (item.category || '').toLowerCase();
             const note = (item.note || '').toLowerCase();
             return name.includes(lowerKeyword) ||
                 location.includes(lowerKeyword) ||
+                category.includes(lowerKeyword) ||
                 note.includes(lowerKeyword);
         });
 

@@ -12,6 +12,7 @@ Page({
     noteExpanded: false, // 备注是否展开
     showUnitField: false, // 是否显示单位输入框
     initialCount: 0,    // 进入页面时的初始数量（用于记录库存变更）
+    countAnimate: false, // 数量变化动画
     // 选择器相关
     allLocations: [],
     allCategories: [],
@@ -134,6 +135,7 @@ Page({
       item.count = item.count - 1;
       if (this.saveItem(item)) {
         this.setData({ item: item });
+        this.triggerCountAnimation();
       }
     }
   },
@@ -146,7 +148,18 @@ Page({
     item.count = item.count + 1;
     if (this.saveItem(item)) {
       this.setData({ item: item });
+      this.triggerCountAnimation();
     }
+  },
+
+  /**
+   * 触发数量跳动动画
+   */
+  triggerCountAnimation: function () {
+    this.setData({ countAnimate: true });
+    setTimeout(() => {
+      this.setData({ countAnimate: false });
+    }, 260);
   },
 
   /**

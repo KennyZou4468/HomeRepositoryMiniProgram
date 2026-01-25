@@ -1,5 +1,40 @@
 /* pages/index/index.wxss */
 
+/* 页面进入动画 */
+@keyframes pageEnter {
+  from {
+    opacity: 0;
+    transform: translateY(20rpx);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.page-enter {
+  animation: pageEnter 0.3s ease-out;
+}
+
+/* 卡片逐条淡入动画 */
+@keyframes cardSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(30rpx);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.card-animate {
+  animation: cardSlideIn 0.35s ease-out forwards;
+  opacity: 0;
+}
+
 .container {
   padding: 30rpx;
   padding-bottom: 160rpx;
@@ -87,12 +122,13 @@
   padding: 20rpx 20rpx;
   box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.05);
   border: 2rpx solid #f5f0ea;
-  transition: all 0.2s ease;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
 }
 
 .item-card:active {
-  transform: scale(0.98);
-  background-color: #fffcf8;
+  transform: scale(0.97);
+  background-color: #fff8f2;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.08);
 }
 
 .card-main {
@@ -144,6 +180,7 @@
   display: flex;
   flex-direction: column;
   align-items: flex-end;
+  justify-content: center;
   margin-left: 20rpx;
 }
 
@@ -151,6 +188,7 @@
   font-size: 30rpx;
   font-weight: 600;
   color: #5a9b7a;
+  line-height: 1;
 }
 
 .low-count {
@@ -229,7 +267,7 @@
 /* 新增物品按钮 */
 .add-button {
   position: fixed;
-  bottom: 50rpx;
+  bottom: 180rpx;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
@@ -240,12 +278,28 @@
   padding: 28rpx 56rpx;
   border-radius: 50rpx;
   box-shadow: 0 10rpx 30rpx rgba(255, 152, 108, 0.4);
-  transition: all 0.2s ease;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  z-index: 998;
+  /* 按钮微微上下浮动动画 */
+  animation: floatButton 3s ease-in-out infinite;
+}
+
+@keyframes floatButton {
+
+  0%,
+  100% {
+    transform: translateX(-50%) translateY(0);
+  }
+
+  50% {
+    transform: translateX(-50%) translateY(-8rpx);
+  }
 }
 
 .add-button:active {
-  transform: translateX(-50%) scale(0.96);
-  box-shadow: 0 6rpx 20rpx rgba(255, 152, 108, 0.4);
+  transform: translateX(-50%) scale(0.94);
+  box-shadow: 0 4rpx 16rpx rgba(255, 152, 108, 0.5);
+  animation: none;
 }
 
 .add-icon {

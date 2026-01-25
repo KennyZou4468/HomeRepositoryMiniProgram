@@ -1,4 +1,4 @@
-<!--pages/detail/detail.wxml-->
+<!-- pages/detail/detail.wxml -->
 <wxs module="utils">
   module.exports.formatTime = function(timestamp) {
     var date = getDate(timestamp * 1000);
@@ -17,9 +17,9 @@
     return month + '/' + day + ' ' + (hour < 10 ? '0' + hour : hour) + ':' + (minute < 10 ? '0' + minute : minute);
   }
 </wxs>
-<view class="container {{darkMode ? 'theme-dark' : ''}}" wx:if="{{item}}">
+<view class="container {{darkMode ? 'theme-dark' : ''}} page-enter" wx:if="{{item}}">
   <!-- 查看模式 -->
-  <view class="detail-card" wx:if="{{!isEditing}}">
+  <view class="detail-card card-animate" wx:if="{{!isEditing}}">
     <!-- 物品名称 -->
     <view class="item-header">
       <text class="item-icon">📦</text>
@@ -28,7 +28,6 @@
         <text class="item-category" wx:if="{{item.category}}">🏷️ {{item.category}}</text>
       </view>
     </view>
-
     <!-- 数量调节 -->
     <view class="count-section">
       <text class="count-label">🧮 当前数量</text>
@@ -37,8 +36,10 @@
           <text>－</text>
         </view>
         <view class="count-value-wrapper">
-          <text class="count-value {{item.count <= 2 ? 'low-count' : ''}}">{{item.count}}</text>
-          <text class="count-unit" wx:if="{{item.unit}}">{{item.unit}}</text>
+          <view class="count-value {{item.count <= 2 ? 'low-count' : ''}} {{countAnimate ? 'count-animate' : ''}}">
+            {{item.count}}
+          </view>
+          <view class="count-unit" wx:if="{{item.unit}}">{{item.unit}}</view>
         </view>
         <view class="count-btn increase" bindtap="onIncrease">
           <text>＋</text>
@@ -46,7 +47,6 @@
       </view>
       <text class="low-count-tip" wx:if="{{item.count <= 2}}">⚠️ 快用完啦，记得补货～</text>
     </view>
-
     <!-- 物品信息 -->
     <view class="info-section">
       <view class="info-item">
@@ -56,20 +56,20 @@
       <view class="info-item" wx:if="{{item.note}}">
         <text class="info-label">📝 备注</text>
         <view class="note-wrapper">
-          <text class="info-value note-content {{noteExpanded ? 'expanded' : 'collapsed'}}" user-select>{{item.note}}</text>
+          <text class="info-value note-content {{noteExpanded ? 'expanded' : 'collapsed'}}" user-select>
+            {{item.note}}
+          </text>
           <view class="note-expand-btn" wx:if="{{item.note.length > 80}}" bindtap="toggleNoteExpand">
             <text>{{noteExpanded ? '收起 ▲' : '展开 ▼'}}</text>
           </view>
         </view>
       </view>
     </view>
-
     <!-- 操作按钮 -->
     <view class="action-buttons">
       <button class="btn btn-edit" bindtap="onEdit">✏️ 编辑信息</button>
       <button class="btn btn-delete" bindtap="onDelete">🗑️ 删除物品</button>
     </view>
-
     <!-- 库存变更记录 -->
     <view class="history-section" wx:if="{{item.history && item.history.length > 0}}">
       <view class="history-header">
@@ -89,13 +89,11 @@
       </view>
     </view>
   </view>
-
   <!-- 编辑模式 -->
-  <view class="edit-card" wx:if="{{isEditing}}">
+  <view class="edit-card card-animate" wx:if="{{isEditing}}">
     <view class="edit-header">
       <text class="edit-title">✏️ 编辑物品信息</text>
     </view>
-    
     <view class="form">
       <!-- 物品名称 -->
       <view class="form-item">
@@ -104,15 +102,8 @@
           <text>物品名称</text>
           <text class="required">*</text>
         </view>
-        <input 
-          class="form-input" 
-          placeholder="这是什么物品呀？"
-          value="{{editData.name}}"
-          bindinput="onNameInput"
-          maxlength="50"
-        />
+        <input class="form-input" placeholder="这是什么物品呀？" value="{{editData.name}}" bindinput="onNameInput" maxlength="50" />
       </view>
-
       <!-- 单位（可选，可折叠） -->
       <view class="form-item form-item-collapsible" wx:if="{{showUnitField || editData.unit}}">
         <view class="form-label">
@@ -121,19 +112,12 @@
           <text class="optional">选填</text>
           <text class="collapse-btn" bindtap="hideUnitField">收起</text>
         </view>
-        <input 
-          class="form-input" 
-          placeholder="个、件、盒、瓶..."
-          value="{{editData.unit}}"
-          bindinput="onUnitInput"
-          maxlength="10"
-        />
+        <input class="form-input" placeholder="个、件、盒、瓶..." value="{{editData.unit}}" bindinput="onUnitInput" maxlength="10" />
       </view>
       <view class="add-field-btn" wx:if="{{!showUnitField && !editData.unit}}" bindtap="showUnitFieldTap">
         <text class="add-field-icon">＋</text>
         <text class="add-field-text">添加单位</text>
       </view>
-
       <!-- 存放位置 -->
       <view class="form-item">
         <view class="form-label">
@@ -142,13 +126,12 @@
           <text class="required">*</text>
         </view>
         <view class="form-select" bindtap="openLocationPicker">
-          <text class="{{editData.location ? 'select-value' : 'select-placeholder'}}">
+          <view class="{{editData.location ? 'select-value' : 'select-placeholder'}}">
             {{editData.location || '点击选择存放位置'}}
-          </text>
-          <text class="select-arrow">▼</text>
+          </view>
+          <view class="select-arrow">▼</view>
         </view>
       </view>
-
       <!-- 分类 -->
       <view class="form-item">
         <view class="form-label">
@@ -157,30 +140,23 @@
           <text class="optional">选填</text>
         </view>
         <view class="form-select" bindtap="openCategoryPicker">
-          <text class="{{editData.category ? 'select-value' : 'select-placeholder'}}">
+          <view class="{{editData.category ? 'select-value' : 'select-placeholder'}}">
             {{editData.category || '点击选择分类'}}
-          </text>
-          <text class="select-arrow">▼</text>
+          </view>
+          <view class="select-arrow">▼</view>
         </view>
       </view>
-
       <!-- 备注 -->
       <view class="form-item">
         <view class="form-label">
           <text class="label-emoji">📝</text>
           <text>备注</text>
           <text class="optional">选填</text>
+          <text class="char-limit">{{editData.note.length || 0}}/250</text>
         </view>
-        <textarea 
-          class="form-textarea" 
-          placeholder="有什么要记住的吗？"
-          value="{{editData.note}}"
-          bindinput="onNoteInput"
-          maxlength="250"
-        />
+        <textarea class="form-textarea" placeholder="有什么要记住的吗？（最多250字）" value="{{editData.note}}" bindinput="onNoteInput" maxlength="250" auto-height="{{true}}" />
       </view>
     </view>
-
     <!-- 编辑模式按钮 -->
     <view class="button-group">
       <button class="btn btn-cancel" bindtap="onCancelEdit">取消</button>
@@ -188,80 +164,50 @@
     </view>
   </view>
 </view>
-
 <!-- 位置选择器弹窗 -->
-<view class="picker-mask" wx:if="{{showLocationPicker}}" bindtap="closeLocationPicker"></view>
-<view class="picker-popup {{showLocationPicker ? 'show' : ''}}">
+<view class="picker-mask {{darkMode ? 'theme-dark' : ''}}" wx:if="{{showLocationPicker}}" bindtap="closeLocationPicker"></view>
+<view class="picker-popup {{darkMode ? 'theme-dark' : ''}} {{showLocationPicker ? 'show' : ''}}">
   <view class="picker-header">
     <text class="picker-title">📍 选择存放位置</text>
     <text class="picker-close" bindtap="closeLocationPicker">✕</text>
   </view>
   <scroll-view class="picker-list" scroll-y>
-    <view 
-      class="picker-item {{editData.location === item ? 'selected' : ''}}" 
-      wx:for="{{allLocations}}" 
-      wx:key="*this"
-      data-value="{{item}}"
-      bindtap="onSelectLocation"
-    >
-      <text>{{item}}</text>
-      <text class="picker-check" wx:if="{{editData.location === item}}">✓</text>
+    <view class="picker-item {{editData.location === item ? 'selected' : ''}}" wx:for="{{allLocations}}" wx:key="*this" data-value="{{item}}" bindtap="onSelectLocation">
+      <view class="picker-item-text">{{item}}</view>
+      <view class="picker-check" wx:if="{{editData.location === item}}">✓</view>
     </view>
   </scroll-view>
-  
   <!-- 添加新位置 -->
   <view class="picker-add-section">
     <view class="picker-add-btn" bindtap="showAddLocation" wx:if="{{!showAddLocationInput}}">
       <text>＋ 添加新位置</text>
     </view>
     <view class="picker-add-input-wrapper" wx:if="{{showAddLocationInput}}">
-      <input 
-        class="picker-add-input" 
-        placeholder="输入新位置名称"
-        value="{{newLocationInput}}"
-        bindinput="onNewLocationInput"
-        focus="{{showAddLocationInput}}"
-        maxlength="20"
-      />
+      <input class="picker-add-input" placeholder="输入新位置名称" value="{{newLocationInput}}" bindinput="onNewLocationInput" focus="{{showAddLocationInput}}" maxlength="20" />
       <button class="picker-add-confirm" bindtap="confirmAddLocation">确定</button>
     </view>
   </view>
 </view>
-
 <!-- 分类选择器弹窗 -->
-<view class="picker-mask" wx:if="{{showCategoryPicker}}" bindtap="closeCategoryPicker"></view>
-<view class="picker-popup {{showCategoryPicker ? 'show' : ''}}">
+<view class="picker-mask {{darkMode ? 'theme-dark' : ''}}" wx:if="{{showCategoryPicker}}" bindtap="closeCategoryPicker"></view>
+<view class="picker-popup {{darkMode ? 'theme-dark' : ''}} {{showCategoryPicker ? 'show' : ''}}">
   <view class="picker-header">
     <text class="picker-title">🏷️ 选择分类</text>
     <text class="picker-close" bindtap="closeCategoryPicker">✕</text>
   </view>
   <scroll-view class="picker-list" scroll-y>
-    <view 
-      class="picker-item {{editData.category === item ? 'selected' : ''}}" 
-      wx:for="{{allCategories}}" 
-      wx:key="*this"
-      data-value="{{item}}"
-      bindtap="onSelectCategory"
-    >
-      <text>{{item}}</text>
-      <text class="picker-check" wx:if="{{editData.category === item}}">✓</text>
+    <view class="picker-item {{editData.category === item ? 'selected' : ''}}" wx:for="{{allCategories}}" wx:key="*this" data-value="{{item}}" bindtap="onSelectCategory">
+      <view class="picker-item-text">{{item}}</view>
+      <view class="picker-check" wx:if="{{editData.category === item}}">✓</view>
     </view>
   </scroll-view>
-  
   <!-- 添加新分类 -->
   <view class="picker-add-section">
     <view class="picker-add-btn" bindtap="showAddCategory" wx:if="{{!showAddCategoryInput}}">
       <text>＋ 添加新分类</text>
     </view>
     <view class="picker-add-input-wrapper" wx:if="{{showAddCategoryInput}}">
-      <input 
-        class="picker-add-input" 
-        placeholder="输入新分类名称"
-        value="{{newCategoryInput}}"
-        bindinput="onNewCategoryInput"
-        focus="{{showAddCategoryInput}}"
-        maxlength="20"
-      />
+      <input class="picker-add-input" placeholder="输入新分类名称" value="{{newCategoryInput}}" bindinput="onNewCategoryInput" focus="{{showAddCategoryInput}}" maxlength="20" />
       <button class="picker-add-confirm" bindtap="confirmAddCategory">确定</button>
     </view>
   </view>

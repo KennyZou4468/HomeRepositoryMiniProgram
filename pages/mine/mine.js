@@ -37,6 +37,22 @@ Page({
         this.loadSettings();
         this.loadStorageInfo();
         this.updateThemeState();
+        // 更新自定义tabBar状态
+        this.updateTabBar();
+    },
+
+    /**
+     * 更新自定义tabBar状态
+     */
+    updateTabBar: function () {
+        if (typeof this.getTabBar === 'function' && this.getTabBar()) {
+            const app = getApp();
+            const actualTheme = app.getActualTheme ? app.getActualTheme() : 'light';
+            this.getTabBar().setData({
+                selected: 1,
+                darkMode: actualTheme === 'dark'
+            });
+        }
     },
 
     /**
@@ -111,6 +127,8 @@ Page({
             }
             // 更新本页面的暗色模式状态
             this.updateThemeState();
+            // 立即更新tabBar主题
+            this.updateTabBar();
             wx.showToast({
                 title: '已切换～',
                 icon: 'success'
