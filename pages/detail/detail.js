@@ -524,5 +524,45 @@ Page({
         icon: 'none'
       });
     }
+  },
+
+  /**
+   * 转发给朋友
+   */
+  onShareAppMessage: function () {
+    const item = this.data.item;
+    if (item) {
+      const countInfo = item.count !== undefined ? `（还剩${item.count}${item.unit || '个'}）` : '';
+      return {
+        title: `${item.name} 放在 ${item.location}${countInfo}`,
+        path: '/pages/index/index',
+        imageUrl: '' // 可以设置分享图片
+      };
+    }
+    return {
+      title: '家庭物品管理 - 轻松找到家里的每一件物品',
+      path: '/pages/index/index',
+      imageUrl: ''
+    };
+  },
+
+  /**
+   * 分享到朋友圈
+   */
+  onShareTimeline: function () {
+    const item = this.data.item;
+    if (item) {
+      const countInfo = item.count !== undefined ? `（还剩${item.count}${item.unit || '个'}）` : '';
+      return {
+        title: `${item.name} 放在 ${item.location}${countInfo}`,
+        query: '',
+        imageUrl: '' // 可以设置分享图片
+      };
+    }
+    return {
+      title: '家庭物品管理 - 轻松找到家里的每一件物品',
+      query: '',
+      imageUrl: ''
+    };
   }
 })

@@ -559,3 +559,69 @@
 .theme-dark .btn-cancel:active {
   background-color: #444444 !important;
 }
+/* ==================== 特殊物品相关样式 ==================== */
+
+/* 特殊物品选项 */
+.form-item-special {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.form-item-special .form-label {
+  margin-bottom: 0;
+  flex: 1;
+}
+
+.form-switch {
+  transform: scale(0.9);
+}
+
+/* 时间选择器样式 */
+.form-picker {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  min-height: 88rpx;
+  padding: 0 28rpx;
+  background-color: #faf8f5;
+  border-radius: 20rpx;
+  font-size: 30rpx;
+  color: #5a5a5a;
+  border: 2rpx solid #f0ebe4;
+  box-sizing: border-box;
+  transition: background-color 0.15s ease, transform 0.15s ease;
+}
+
+.form-picker:active {
+  background-color: #f5f0ea;
+  transform: scale(0.99);
+}
+
+.form-picker .select-placeholder {
+  color: #c0b8ae;
+}
+
+.form-picker .select-value {
+  color: #5a5a5a;
+  font-weight: normal;
+}
+
+/* 深色模式适配 */
+.theme-dark .form-picker {
+  background-color: #333333;
+  border-color: #444444;
+  color: #e0e0e0;
+}
+
+.theme-dark .form-picker:active {
+  background-color: #3a3a3a;
+}
+
+.theme-dark .form-picker .select-placeholder {
+  color: #666666;
+}
+
+.theme-dark .form-picker .select-value {
+  color: #e0e0e0;
+}

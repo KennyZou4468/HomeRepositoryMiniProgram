@@ -5,6 +5,21 @@
     <text class="page-title">🏠 我的家</text>
     <text class="page-subtitle">记录家里的每一件小物品</text>
   </view>
+  
+  <!-- 标签页切换 -->
+  <view class="tab-bar">
+    <view class="tab-item {{currentTab === 0 ? 'active' : ''}}" data-tab="{{0}}" bindtap="onTabChange">
+      <text class="tab-icon">📦</text>
+      <text class="tab-text">常规物品</text>
+      <text class="tab-count" wx:if="{{normalItems.length > 0}}">({{normalItems.length}})</text>
+    </view>
+    <view class="tab-item {{currentTab === 1 ? 'active' : ''}}" data-tab="{{1}}" bindtap="onTabChange">
+      <text class="tab-icon">⏰</text>
+      <text class="tab-text">特殊物品</text>
+      <text class="tab-count" wx:if="{{specialItems.length > 0}}">({{specialItems.length}})</text>
+    </view>
+  </view>
+  
   <!-- 搜索框 -->
   <view class="search-box">
     <text class="search-emoji">🔍</text>
@@ -13,40 +28,72 @@
       <text>✕</text>
     </view>
   </view>
+  
   <!-- 物品列表 -->
-  <view class="item-list" wx:if="{{filteredItems.length > 0}}">
-    <!-- 列表项 - 卡片式，逐条淡入动画 -->
-    <view class="item-card card-animate" style="animation-delay: {{index * 50}}ms;" wx:for="{{filteredItems}}" wx:key="id" data-id="{{item.id}}" bindtap="onItemTap">
-      <view class="card-main">
-        <view class="card-icon">📦</view>
-        <view class="card-info">
-          <text class="card-name">{{item.name}}</text>
-          <view class="card-location">
-            <text class="location-icon">📍</text>
-            <text class="location-text">{{item.location}}</text>
+  <view class="item-list" wx:if="{{(currentTab === 0 && normalItems.length > 0) || (currentTab === 1 && specialItems.length > 0)}}">
+    <!-- 常规物品 -->
+    <view wx:if="{{currentTab === 0}}">
+      <!-- 列表项 - 卡片式，逐条淡入动画 -->
+      <view class="item-card card-animate" style="animation-delay: {{index * 50}}ms;" wx:for="{{normalItems}}" wx:key="id" data-id="{{item.id}}" bindtap="onItemTap">
+        <view class="card-main">
+          <view class="card-icon">📦</view>
+          <view class="card-info">
+            <text class="card-name">{{item.name}}</text>
+            <view class="card-location">
+              <text class="location-icon">📍</text>
+              <text class="location-text">{{item.location}}</text>
+            </view>
+          </view>
+          <view class="card-count-wrapper">
+            <view class="card-count {{item.count <= 2 ? 'low-count' : ''}}">
+              {{item.count}}{{item.unit ? item.unit : ''}}
+            </view>
+            <text class="low-count-tip" wx:if="{{item.count <= 2}}">快用完啦～</text>
           </view>
         </view>
-        <view class="card-count-wrapper">
-          <view class="card-count {{item.count <= 2 ? 'low-count' : ''}}">
-            {{item.count}}{{item.unit ? item.unit : ''}}
-          </view>
-          <text class="low-count-tip" wx:if="{{item.count <= 2}}">快用完啦～</text>
-        </view>
+        <view class="card-arrow">›</view>
       </view>
-      <view class="card-arrow">›</view>
+    </view>
+    
+    <!-- 特殊物品（有使用期限） -->
+    <view wx:if="{{currentTab === 1}}">
+      <!-- 列表项 - 卡片式，逐条淡入动画 -->
+      <view class="item-card card-animate {{item.expireStatusClass}}" style="animation-delay: {{index * 50}}ms;" wx:for="{{specialItems}}" wx:key="id" data-id="{{item.id}}" bindtap="onItemTap">
+        <view class="card-main">
+          <view class="card-icon">⏰</view>
+          <view class="card-info">
+            <text class="card-name">{{item.name}}</text>
+            <view class="card-location">
+              <text class="location-icon">📍</text>
+              <text class="location-text">{{item.location}}</text>
+            </view>
+            <!-- 到期状态 -->
+            <view class="expire-status {{item.expireStatusClass}}" wx:if="{{item.expireStatusText}}">
+              <text>{{item.expireStatusText}}</text>
+            </view>
+          </view>
+          <view class="card-count-wrapper">
+            <view class="card-count {{item.count <= 2 ? 'low-count' : ''}}">
+              {{item.count}}{{item.unit ? item.unit : ''}}
+            </view>
+            <text class="low-count-tip" wx:if="{{item.count <= 2}}">快用完啦～</text>
+          </view>
+        </view>
+        <view class="card-arrow">›</view>
+      </view>
     </view>
   </view>
   <!-- 搜索无结果 -->
-  <view class="no-result" wx:if="{{filteredItems.length === 0 && searchText && items.length > 0}}">
+  <view class="no-result" wx:if="{{((currentTab === 0 && normalItems.length === 0) || (currentTab === 1 && specialItems.length === 0)) && searchText && items.length > 0}}">
     <text class="no-result-emoji">🤔</text>
     <text class="no-result-text">没有找到「{{searchText}}」相关的物品</text>
     <text class="no-result-hint">换个关键词试试？</text>
   </view>
   <!-- 空状态 -->
-  <view class="empty-state" wx:if="{{isEmpty && !searchText}}">
-    <text class="empty-icon">🏡</text>
-    <text class="empty-title">家里还没有记录物品哦～</text>
-    <text class="empty-subtitle">先加一个吧，让生活更有条理 ✨</text>
+  <view class="empty-state" wx:if="{{((currentTab === 0 && normalItems.length === 0) || (currentTab === 1 && specialItems.length === 0)) && !searchText}}">
+    <text class="empty-icon">{{currentTab === 0 ? '📦' : '⏰'}}</text>
+    <text class="empty-title">{{currentTab === 0 ? '还没有常规物品哦～' : '还没有特殊物品哦～'}}</text>
+    <text class="empty-subtitle">{{currentTab === 0 ? '点击下方按钮添加第一个物品吧' : '添加有使用期限的物品，及时管理保质期'}}</text>
   </view>
   <!-- 新增物品按钮 -->
   <view class="add-button" bindtap="onAddItem">

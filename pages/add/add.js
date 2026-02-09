@@ -12,6 +12,9 @@ Page({
     category: '',       // 分类（可选）
     note: '',           // 备注（可选）
     showUnitField: false, // 是否显示单位输入框
+    // 特殊物品相关字段
+    isSpecial: false,   // 是否为特殊物品（有使用期限）
+    expireDate: '',     // 到期日期（格式：YYYY-MM-DD）
     // 选择器相关
     allLocations: [],
     allCategories: [],
@@ -87,6 +90,25 @@ Page({
    */
   onUnitInput: function (e) {
     this.setData({ unit: e.detail.value });
+  },
+
+  /**
+   * 切换是否为特殊物品
+   */
+  onSpecialChange: function (e) {
+    const isSpecial = e.detail.value;
+    this.setData({ 
+      isSpecial: isSpecial,
+      // 如果取消勾选，清空到期日期
+      expireDate: isSpecial ? this.data.expireDate : ''
+    });
+  },
+
+  /**
+   * 选择到期日期
+   */
+  onExpireDateChange: function (e) {
+    this.setData({ expireDate: e.detail.value });
   },
 
   // ========== 位置选择器 ==========
@@ -222,6 +244,25 @@ Page({
   },
 
   /**
+   * 切换是否为特殊物品
+   */
+  onSpecialChange: function (e) {
+    const isSpecial = e.detail.value;
+    this.setData({ 
+      isSpecial: isSpecial,
+      // 如果取消勾选，清空到期日期
+      expireDate: isSpecial ? this.data.expireDate : ''
+    });
+  },
+
+  /**
+   * 选择到期日期
+   */
+  onExpireDateChange: function (e) {
+    this.setData({ expireDate: e.detail.value });
+  },
+
+  /**
    * 生成唯一ID
    */
   generateId: function () {
@@ -232,7 +273,7 @@ Page({
    * 保存物品
    */
   onSave: function () {
-    const { name, count, unit, location, category, note } = this.data;
+    const { name, count, unit, location, category, note, isSpecial, expireDate } = this.data;
 
     // 校验必填字段
     if (!name || name.trim() === '') {
@@ -246,6 +287,15 @@ Page({
     if (!location || location.trim() === '') {
       wx.showToast({
         title: '请选择存放位置',
+        icon: 'none'
+      });
+      return;
+    }
+
+    // 如果是特殊物品，必须选择到期日期
+    if (isSpecial && (!expireDate || expireDate.trim() === '')) {
+      wx.showToast({
+        title: '请选择到期日期',
         icon: 'none'
       });
       return;
@@ -283,7 +333,10 @@ Page({
       category: category.trim(),
       note: note.trim(),
       createdAt: now,
-      updatedAt: now
+      updatedAt: now,
+      // 特殊物品相关字段
+      isSpecial: isSpecial || false,
+      expireAt: isSpecial && expireDate ? new Date(expireDate).getTime() : null
     };
 
     // 读取现有数据并追加新物品
@@ -321,5 +374,27 @@ Page({
    */
   onCancel: function () {
     wx.navigateBack();
+  },
+
+  /**
+   * 转发给朋友
+   */
+  onShareAppMessage: function () {
+    return {
+      title: '家庭物品管理 - 轻松找到家里的每一件物品',
+      path: '/pages/index/index',
+      imageUrl: '' // 可以设置分享图片
+    };
+  },
+
+  /**
+   * 分享到朋友圈
+   */
+  onShareTimeline: function () {
+    return {
+      title: '家庭物品管理 - 轻松找到家里的每一件物品',
+      query: '',
+      imageUrl: '' // 可以设置分享图片
+    };
   }
 })

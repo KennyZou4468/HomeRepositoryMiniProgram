@@ -63,6 +63,51 @@
   display: block;
 }
 
+/* 标签页切换样式 */
+.tab-bar {
+  display: flex;
+  background-color: #ffffff;
+  border-radius: 28rpx;
+  padding: 8rpx;
+  margin-bottom: 24rpx;
+  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.06);
+  border: 2rpx solid #f5f0ea;
+}
+
+.tab-item {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20rpx 24rpx;
+  border-radius: 20rpx;
+  font-size: 28rpx;
+  color: #8a8279;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.tab-item.active {
+  background: linear-gradient(135deg, #ffb88e 0%, #ff9a6c 100%);
+  color: #ffffff;
+  box-shadow: 0 4rpx 12rpx rgba(255, 152, 108, 0.3);
+}
+
+.tab-icon {
+  font-size: 32rpx;
+  margin-right: 8rpx;
+}
+
+.tab-text {
+  font-weight: 500;
+}
+
+.tab-count {
+  font-size: 24rpx;
+  margin-left: 6rpx;
+  opacity: 0.8;
+}
+
 /* 搜索框样式 */
 .search-box {
   display: flex;
@@ -422,4 +467,107 @@
 .theme-dark .empty-text,
 .theme-dark .empty-subtitle {
   color: #888888 !important;
+}
+
+/* 暗色模式 - 标签栏 */
+.theme-dark .tab-bar {
+  background-color: #2a2a2a;
+  border-color: #3a3a3a;
+}
+
+.theme-dark .tab-item {
+  color: #888888;
+}
+
+.theme-dark .tab-item.active {
+  background: linear-gradient(135deg, #ffb88e 0%, #ff9a6c 100%);
+  color: #ffffff;
+}
+
+/* ==================== 特殊物品到期状态样式 ==================== */
+
+/* 区块标题 */
+.item-section {
+  margin-bottom: 40rpx;
+}
+
+.section-title {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #4a4a4a;
+  margin-bottom: 20rpx;
+  padding-left: 10rpx;
+}
+
+/* 到期状态标签 */
+.expire-status {
+  display: inline-block;
+  padding: 6rpx 16rpx;
+  border-radius: 20rpx;
+  font-size: 22rpx;
+  margin-top: 10rpx;
+  font-weight: 500;
+}
+
+/* 警告状态（30天内） - 黄色 */
+.expire-warning {
+  background-color: #fff4e6;
+  color: #e67e22;
+}
+
+.item-card.expire-warning {
+  border-left: 6rpx solid #f39c12;
+}
+
+/* 危险状态（7天内） - 红色 */
+.expire-danger {
+  background-color: #ffe6e6;
+  color: #e74c3c;
+}
+
+.item-card.expire-danger {
+  border-left: 6rpx solid #e74c3c;
+}
+
+/* 已到期状态 - 灰色 */
+.expire-expired {
+  background-color: #f0f0f0;
+  color: #999999;
+}
+
+.item-card.expire-expired {
+  opacity: 0.6;
+  border-left: 6rpx solid #cccccc;
+}
+
+.item-card.expire-expired .card-name,
+.item-card.expire-expired .card-location,
+.item-card.expire-expired .card-count {
+  color: #999999;
+}
+
+/* 深色模式适配 */
+.theme-dark .section-title {
+  color: #f0f0f0;
+}
+
+.theme-dark .expire-warning {
+  background-color: rgba(230, 126, 34, 0.2);
+  color: #f39c12;
+}
+
+.theme-dark .expire-danger {
+  background-color: rgba(231, 76, 60, 0.2);
+  color: #e74c3c;
+}
+
+.theme-dark .expire-expired {
+  background-color: rgba(153, 153, 153, 0.2);
+  color: #888888;
+}
+
+.theme-dark .item-card.expire-expired .card-name,
+.theme-dark .item-card.expire-expired .card-location,
+.theme-dark .item-card.expire-expired .card-count {
+  color: #888888;
 }
