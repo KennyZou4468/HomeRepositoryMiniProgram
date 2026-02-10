@@ -1,24 +1,18 @@
 <!-- pages/index/index.wxml -->
 <view class="container {{darkMode ? 'theme-dark' : ''}} page-enter">
-  <!-- 页面标题 -->
-  <view class="page-header">
-    <text class="page-title">🏠 我的家</text>
-    <text class="page-subtitle">记录家里的每一件小物品</text>
-  </view>
-  
-  <!-- 标签页切换 -->
-  <view class="tab-bar">
-    <view class="tab-item {{currentTab === 0 ? 'active' : ''}}" data-tab="{{0}}" bindtap="onTabChange">
-      <text class="tab-icon">📦</text>
-      <text class="tab-text">常规物品</text>
-      <text class="tab-count" wx:if="{{normalItems.length > 0}}">({{normalItems.length}})</text>
+  <!-- 分类切换 Bar -->
+  <view class="category-bar">
+    <view class="category-item {{currentTab === 0 ? 'active' : ''}}" data-tab="{{0}}" bindtap="onTabChange">
+      <text class="category-text">常规物品</text>
+      <view class="category-indicator" wx:if="{{currentTab === 0}}"></view>
     </view>
-    <view class="tab-item {{currentTab === 1 ? 'active' : ''}}" data-tab="{{1}}" bindtap="onTabChange">
-      <text class="tab-icon">⏰</text>
-      <text class="tab-text">特殊物品</text>
-      <text class="tab-count" wx:if="{{specialItems.length > 0}}">({{specialItems.length}})</text>
+    <view class="category-item {{currentTab === 1 ? 'active' : ''}}" data-tab="{{1}}" bindtap="onTabChange">
+      <text class="category-text">特殊物品</text>
+      <view class="category-indicator" wx:if="{{currentTab === 1}}"></view>
     </view>
   </view>
+  <!-- 分割线 -->
+  <view class="divider"></view>
   
   <!-- 搜索框 -->
   <view class="search-box">

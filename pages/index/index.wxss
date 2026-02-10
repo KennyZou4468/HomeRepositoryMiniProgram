@@ -63,49 +63,66 @@
   display: block;
 }
 
-/* 标签页切换样式 */
-.tab-bar {
-  display: flex;
-  background-color: #ffffff;
-  border-radius: 28rpx;
-  padding: 8rpx;
-  margin-bottom: 24rpx;
-  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.06);
-  border: 2rpx solid #f5f0ea;
-}
-
-.tab-item {
-  flex: 1;
+/* 分类切换 Bar 样式 */
+.category-bar {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 20rpx 24rpx;
-  border-radius: 20rpx;
-  font-size: 28rpx;
-  color: #8a8279;
-  transition: all 0.3s ease;
+  padding: 32rpx 0 20rpx;
+  background-color: #ffffff;
+}
+
+.category-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 16rpx 0;
   position: relative;
+  transition: all 0.3s ease;
 }
 
-.tab-item.active {
-  background: linear-gradient(135deg, #ffb88e 0%, #ff9a6c 100%);
-  color: #ffffff;
-  box-shadow: 0 4rpx 12rpx rgba(255, 152, 108, 0.3);
-}
-
-.tab-icon {
+.category-text {
   font-size: 32rpx;
-  margin-right: 8rpx;
+  color: #999999;
+  transition: all 0.3s ease;
 }
 
-.tab-text {
-  font-weight: 500;
+/* 选中状态 */
+.category-item.active .category-text {
+  color: #2c2c2c;
+  font-weight: 600;
 }
 
-.tab-count {
-  font-size: 24rpx;
-  margin-left: 6rpx;
-  opacity: 0.8;
+/* 选中标识 - 底部横线 */
+.category-indicator {
+  position: absolute;
+  bottom: 0;
+  width: 60rpx;
+  height: 6rpx;
+  background: linear-gradient(135deg, #ffb88e 0%, #ff9a6c 100%);
+  border-radius: 3rpx;
+  animation: indicatorSlide 0.3s ease-out;
+}
+
+@keyframes indicatorSlide {
+  from {
+    width: 0;
+    opacity: 0;
+  }
+  to {
+    width: 60rpx;
+    opacity: 1;
+  }
+}
+
+/* 分割线 */
+.divider {
+  width: 100%;
+  height: 1rpx;
+  background-color: #f0f0f0;
+  margin-bottom: 24rpx;
 }
 
 /* 搜索框样式 */
@@ -469,19 +486,21 @@
   color: #888888 !important;
 }
 
-/* 暗色模式 - 标签栏 */
-.theme-dark .tab-bar {
-  background-color: #2a2a2a;
-  border-color: #3a3a3a;
+/* 暗色模式 - 分类切换 Bar */
+.theme-dark .category-bar {
+  background-color: #1a1a1a;
 }
 
-.theme-dark .tab-item {
-  color: #888888;
+.theme-dark .category-text {
+  color: #666666;
 }
 
-.theme-dark .tab-item.active {
-  background: linear-gradient(135deg, #ffb88e 0%, #ff9a6c 100%);
-  color: #ffffff;
+.theme-dark .category-item.active .category-text {
+  color: #f0f0f0;
+}
+
+.theme-dark .divider {
+  background-color: #333333;
 }
 
 /* ==================== 特殊物品到期状态样式 ==================== */
