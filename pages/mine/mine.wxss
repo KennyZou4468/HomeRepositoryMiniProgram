@@ -576,3 +576,163 @@
 .theme-dark .storage-btn-all .storage-btn-text {
   color: #d4847a !important;
 }
+
+/* ==================== 开发者名片卡样式 ==================== */
+.developer-card {
+  margin-top: 60rpx;
+  padding: 40rpx;
+  background-color: #ffffff;
+  border-radius: 28rpx;
+  box-shadow: 0 8rpx 32rpx rgba(0, 0, 0, 0.08);
+  border: 2rpx solid #f5f0ea;
+  display: flex;
+  gap: 32rpx;
+}
+
+/* 左侧头像区域 */
+.card-left {
+  flex-shrink: 0;
+}
+
+.avatar {
+  width: 140rpx;
+  height: 140rpx;
+  border-radius: 28rpx;
+  background: linear-gradient(135deg, #fff5eb 0%, #ffe9d6 100%);
+  border: 3rpx solid #ffb88e;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4rpx 16rpx rgba(255, 152, 108, 0.2);
+}
+
+.avatar-text {
+  font-size: 72rpx;
+}
+
+.avatar-img {
+  width: 100%;
+  height: 100%;
+  border-radius: 24rpx;
+}
+
+/* 右侧信息区域 */
+.card-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.card-name {
+  font-size: 36rpx;
+  font-weight: 600;
+  color: #2c2c2c;
+  margin-bottom: 8rpx;
+}
+
+.card-title {
+  font-size: 24rpx;
+  color: #999999;
+  margin-bottom: 20rpx;
+}
+
+.card-intro {
+  font-size: 26rpx;
+  color: #666666;
+  line-height: 1.6;
+  margin-bottom: 24rpx;
+}
+
+/* 链接列表 */
+.link-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12rpx;
+  margin-bottom: 16rpx;
+}
+
+.link-item {
+  display: flex;
+  align-items: center;
+  padding: 16rpx 20rpx;
+  background: linear-gradient(135deg, #faf8f5 0%, #f5f0ea 100%);
+  border-radius: 16rpx;
+  border: 2rpx solid #f0ebe4;
+  transition: all 0.3s ease;
+}
+
+.link-item:active {
+  transform: scale(0.98);
+  background: linear-gradient(135deg, #fff5eb 0%, #fff9f0 100%);
+  border-color: #ffb88e;
+}
+
+.link-item-icon {
+  font-size: 32rpx;
+  margin-right: 16rpx;
+}
+
+.link-item-text {
+  flex: 1;
+  font-size: 28rpx;
+  color: #ff9a6c;
+  font-weight: 500;
+}
+
+.link-item-arrow {
+  font-size: 36rpx;
+  color: #c0b8ae;
+}
+
+.card-tip {
+  font-size: 22rpx;
+  color: #999999;
+  text-align: center;
+}
+
+/* 暗色模式 - 开发者名片卡 */
+.theme-dark .developer-card {
+  background-color: #2a2a2a;
+  border-color: #3a3a3a;
+  box-shadow: 0 8rpx 32rpx rgba(0, 0, 0, 0.3);
+}
+
+.theme-dark .avatar {
+  background: linear-gradient(135deg, #3a3a3a 0%, #333333 100%);
+  border-color: #ff9a6c;
+}
+
+.theme-dark .card-name {
+  color: #f0f0f0;
+}
+
+.theme-dark .card-title {
+  color: #888888;
+}
+
+.theme-dark .card-intro {
+  color: #a0a0a0;
+}
+
+.theme-dark .link-item {
+  background: linear-gradient(135deg, #333333 0%, #2a2a2a 100%);
+  border-color: #444444;
+}
+
+.theme-dark .link-item:active {
+  background: linear-gradient(135deg, #3a3a3a 0%, #333333 100());
+  border-color: #ff9a6c;
+}
+
+.theme-dark .link-item-text {
+  color: #ffb88e;
+}
+
+.theme-dark .link-item-arrow {
+  color: #666666;
+}
+
+.theme-dark .card-tip {
+  color: #666666;
+}

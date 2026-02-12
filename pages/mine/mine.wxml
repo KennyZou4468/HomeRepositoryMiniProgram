@@ -144,4 +144,33 @@
   </view>
   <!-- 底部留白 -->
   <view class="footer-space"></view>
+  
+  <!-- 开发者名片卡 -->
+  <view class="developer-card">
+    <view class="card-left">
+      <!-- 头像区域 -->
+      <view class="avatar">
+        <image class="avatar-img" src="/img/DOG.JPG" mode="aspectFill" />
+      </view>
+    </view>
+    <view class="card-right">
+      <!-- 姓名/标题 -->
+      <text class="card-name">Kenny Zou</text>
+      <text class="card-title">开发者 / Developer</text>
+      
+      <!-- 简介 -->
+      <text class="card-intro">如果喜欢请点个赞或者关注，谢谢 ⭐</text>
+      
+      <!-- 链接列表 -->
+      <view class="link-list">
+        <view class="link-item" bindtap="onCopyGitHubLink">
+          <text class="link-item-icon">🔗</text>
+          <text class="link-item-text">GitHub</text>
+          <text class="link-item-arrow">›</text>
+        </view>
+      </view>
+      
+      <text class="card-tip">点击链接自动复制</text>
+    </view>
+  </view>
 </view>

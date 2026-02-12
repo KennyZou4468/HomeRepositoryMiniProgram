@@ -354,5 +354,28 @@ Page({
             query: '',
             imageUrl: '' // 可以设置分享图片
         };
+    },
+
+    /**
+     * 复制 GitHub 链接
+     */
+    onCopyGitHubLink: function () {
+        const link = 'https://github.com/KennyZou4468?tab=repositories';
+        wx.setClipboardData({
+            data: link,
+            success: () => {
+                wx.showToast({
+                    title: '链接已复制～',
+                    icon: 'success',
+                    duration: 2000
+                });
+            },
+            fail: () => {
+                wx.showToast({
+                    title: '复制失败，请重试',
+                    icon: 'none'
+                });
+            }
+        });
     }
 });
