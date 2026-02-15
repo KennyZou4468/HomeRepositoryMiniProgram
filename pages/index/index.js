@@ -4,6 +4,7 @@ const STORAGE_KEY = 'home_items';
 Page({
     data: {
         darkMode: false,       // 当前是否为暗色模式
+        elderMode: false,      // 老人关怀模式
         items: [],             // 全部物品列表
         filteredItems: [],     // 过滤后的物品列表（已废弃，使用下面分类的）
         searchText: '',        // 搜索关键词
@@ -26,6 +27,9 @@ Page({
         this.loadItems();
         // 更新主题状态
         this.updateThemeState();
+        // 更新老人模式状态
+        const app = getApp();
+        this.setData({ elderMode: app.getElderMode ? app.getElderMode() : false });
         // 更新自定义tabBar状态
         this.updateTabBar();
     },
@@ -39,7 +43,8 @@ Page({
             const actualTheme = app.getActualTheme ? app.getActualTheme() : 'light';
             this.getTabBar().setData({
                 selected: 0,
-                darkMode: actualTheme === 'dark'
+                darkMode: actualTheme === 'dark',
+                elderMode: app.getElderMode ? app.getElderMode() : false
             });
         }
     },

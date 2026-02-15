@@ -5,6 +5,7 @@ const settingsUtil = require('../../utils/settings.js');
 Page({
   data: {
     darkMode: false,    // 当前是否为暗色模式
+    elderMode: false,   // 老人关怀模式
     name: '',           // 物品名称（必填）
     count: 1,           // 数量（默认1）
     unit: '',           // 单位（可选）
@@ -34,6 +35,8 @@ Page({
   onShow: function () {
     this.loadOptions();
     this.updateThemeState();
+    const app = getApp();
+    this.setData({ elderMode: app.getElderMode ? app.getElderMode() : false });
   },
 
   /**

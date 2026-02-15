@@ -2,6 +2,7 @@ Component({
     data: {
         selected: 0,
         darkMode: false,
+        elderMode: false,
         color: "#999999",
         selectedColor: "#ff9a6c",
         list: [
@@ -36,6 +37,9 @@ Component({
             if (app && app.getActualTheme) {
                 const actualTheme = app.getActualTheme();
                 this.setData({ darkMode: actualTheme === 'dark' });
+            }
+            if (app && app.getElderMode) {
+                this.setData({ elderMode: app.getElderMode() });
             }
         }
     }

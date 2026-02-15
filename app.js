@@ -10,7 +10,8 @@ App({
     },
 
     globalData: {
-        theme: 'light' // 当前实际主题：light 或 dark
+        theme: 'light', // 当前实际主题：light 或 dark
+        elderMode: false // 老人关怀模式状态
     },
 
     /**
@@ -19,6 +20,8 @@ App({
     initTheme: function () {
         const themeSetting = settingsUtil.getTheme();
         this.applyTheme(themeSetting);
+        // 恢复老人关怀模式状态
+        this.globalData.elderMode = settingsUtil.getElderMode();
     },
 
     /**
@@ -93,5 +96,20 @@ App({
      */
     getActualTheme: function () {
         return this.globalData.theme;
+    },
+
+    /**
+     * 获取老人关怀模式状态
+     */
+    getElderMode: function () {
+        return this.globalData.elderMode || false;
+    },
+
+    /**
+     * 设置老人关怀模式状态
+     */
+    setElderMode: function (enabled) {
+        this.globalData.elderMode = enabled;
+        settingsUtil.setElderMode(enabled);
     }
 });

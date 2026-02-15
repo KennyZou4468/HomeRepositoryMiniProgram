@@ -1,4 +1,4 @@
-<view class="tab-bar {{darkMode ? 'theme-dark' : ''}}">
+<view class="tab-bar {{darkMode ? 'theme-dark' : ''}} {{elderMode ? 'elder-mode' : ''}}">
     <view class="tab-bar-item" wx:for="{{list}}" wx:key="index" data-path="{{item.pagePath}}" data-index="{{index}}" bindtap="switchTab">
         <image class="tab-bar-icon" src="{{selected === index ? item.selectedIconPath : item.iconPath}}" />
         <text class="tab-bar-text {{selected === index ? 'selected' : ''}}">{{item.text}}</text>

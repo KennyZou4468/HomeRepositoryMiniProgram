@@ -5,6 +5,7 @@ const settingsUtil = require('../../utils/settings.js');
 Page({
   data: {
     darkMode: false,    // 当前是否为暗色模式
+    elderMode: false,   // 老人关怀模式
     item: null,         // 当前物品
     itemId: '',         // 物品ID
     isEditing: false,   // 是否处于编辑模式
@@ -40,6 +41,8 @@ Page({
     }
     this.loadOptions();
     this.updateThemeState();
+    const app = getApp();
+    this.setData({ elderMode: app.getElderMode ? app.getElderMode() : false });
   },
 
   /**

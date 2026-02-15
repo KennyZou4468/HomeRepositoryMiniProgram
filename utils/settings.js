@@ -36,6 +36,7 @@ const PRESET_CATEGORIES = [
 function getDefaultSettings() {
     return {
         theme: 'system', // system | light | dark
+        elderMode: false, // 老年关怀模式
         locations: {
             preset: PRESET_LOCATIONS,
             custom: []
@@ -58,6 +59,7 @@ function getSettings() {
             const defaultSettings = getDefaultSettings();
             return {
                 theme: settings.theme || defaultSettings.theme,
+                elderMode: settings.elderMode !== undefined ? settings.elderMode : false,
                 locations: {
                     preset: PRESET_LOCATIONS, // 预设始终使用最新
                     custom: settings.locations?.custom || []
@@ -256,6 +258,23 @@ function clearItemsData() {
     }
 }
 
+/**
+ * 获取老年关怀模式状态
+ */
+function getElderMode() {
+    const settings = getSettings();
+    return settings.elderMode || false;
+}
+
+/**
+ * 设置老年关怀模式
+ */
+function setElderMode(enabled) {
+    const settings = getSettings();
+    settings.elderMode = enabled;
+    return saveSettings(settings);
+}
+
 module.exports = {
     PRESET_LOCATIONS,
     PRESET_CATEGORIES,
@@ -269,6 +288,8 @@ module.exports = {
     removeCustomCategory,
     getTheme,
     setTheme,
+    getElderMode,
+    setElderMode,
     // 存储管理
     getStorageInfo,
     hasEnoughStorage,

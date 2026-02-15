@@ -1,5 +1,5 @@
 <!-- pages/add/add.wxml -->
-<view class="container {{darkMode ? 'theme-dark' : ''}} page-enter">
+<view class="container {{darkMode ? 'theme-dark' : ''}} {{elderMode ? 'elder-mode' : ''}} page-enter">
   <!-- 页面标题 -->
   <view class="page-header">
     <text class="page-title">🧺 添加一个新物品</text>

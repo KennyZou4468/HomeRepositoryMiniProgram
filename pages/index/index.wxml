@@ -1,5 +1,5 @@
 <!-- pages/index/index.wxml -->
-<view class="container {{darkMode ? 'theme-dark' : ''}} page-enter">
+<view class="container {{darkMode ? 'theme-dark' : ''}} {{elderMode ? 'elder-mode' : ''}} page-enter">
   <!-- 分类切换 Bar -->
   <view class="category-bar">
     <view class="category-item {{currentTab === 0 ? 'active' : ''}}" data-tab="{{0}}" bindtap="onTabChange">

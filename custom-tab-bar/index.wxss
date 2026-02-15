@@ -3,7 +3,7 @@
     bottom: 0;
     left: 0;
     right: 0;
-    height: 100rpx;
+    height: calc(100rpx * var(--ui-scale));
     display: flex;
     background-color: #ffffff;
     border-top: 1rpx solid #f0ebe4;
@@ -17,17 +17,17 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 10rpx 0;
+    padding: calc(10rpx * var(--ui-scale)) 0;
 }
 
 .tab-bar-icon {
-    width: 48rpx;
-    height: 48rpx;
-    margin-bottom: 6rpx;
+    width: calc(48rpx * var(--ui-scale));
+    height: calc(48rpx * var(--ui-scale));
+    margin-bottom: calc(6rpx * var(--ui-scale));
 }
 
 .tab-bar-text {
-    font-size: 24rpx;
+    font-size: calc(24rpx * var(--ui-scale));
     color: #999999;
 }
 
@@ -48,3 +48,9 @@
 .tab-bar.theme-dark .tab-bar-text.selected {
     color: #ff9a6c;
 }
+
+/* 老人关怀模式 - 组件内单独设置CSS变量 */
+.tab-bar.elder-mode {
+    --ui-scale: 1.5;
+}
+

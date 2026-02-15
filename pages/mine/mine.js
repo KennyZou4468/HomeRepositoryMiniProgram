@@ -4,6 +4,7 @@ const settingsUtil = require('../../utils/settings.js');
 Page({
     data: {
         darkMode: false, // 当前是否为暗色模式
+        elderMode: false, // 老人关怀模式
         theme: 'system',
         themeOptions: [
             { value: 'system', label: '跟随系统' },
@@ -50,7 +51,8 @@ Page({
             const actualTheme = app.getActualTheme ? app.getActualTheme() : 'light';
             this.getTabBar().setData({
                 selected: 1,
-                darkMode: actualTheme === 'dark'
+                darkMode: actualTheme === 'dark',
+                elderMode: app.getElderMode ? app.getElderMode() : false
             });
         }
     },
@@ -106,6 +108,7 @@ Page({
         const settings = settingsUtil.getSettings();
         this.setData({
             theme: settings.theme,
+            elderMode: settings.elderMode,
             presetLocations: settings.locations.preset,
             customLocations: settings.locations.custom,
             presetCategories: settings.categories.preset,
@@ -134,6 +137,25 @@ Page({
                 icon: 'success'
             });
         }
+    },
+
+    /**
+     * 切换老人关怀模式
+     */
+    onElderModeChange: function (e) {
+        const enabled = e.detail.value;
+        // 同步更新 globalData 和本地存储
+        const app = getApp();
+        if (app.setElderMode) {
+            app.setElderMode(enabled);
+        }
+        this.setData({ elderMode: enabled });
+        // 同步更新 TabBar 状态
+        this.updateTabBar();
+        wx.showToast({
+            title: enabled ? '已开启大字体模式' : '已关闭大字体模式',
+            icon: 'success'
+        });
     },
 
     /**

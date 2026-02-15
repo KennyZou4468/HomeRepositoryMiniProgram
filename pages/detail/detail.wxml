@@ -17,7 +17,7 @@
     return month + '/' + day + ' ' + (hour < 10 ? '0' + hour : hour) + ':' + (minute < 10 ? '0' + minute : minute);
   }
 </wxs>
-<view class="container {{darkMode ? 'theme-dark' : ''}} page-enter" wx:if="{{item}}">
+<view class="container {{darkMode ? 'theme-dark' : ''}} {{elderMode ? 'elder-mode' : ''}} page-enter" wx:if="{{item}}">
   <!-- 查看模式 -->
   <view class="detail-card card-animate" wx:if="{{!isEditing}}">
     <!-- 物品名称 -->

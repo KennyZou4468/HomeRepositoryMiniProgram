@@ -1,5 +1,5 @@
 <!-- pages/mine/mine.wxml -->
-<view class="container {{darkMode ? 'theme-dark' : ''}} page-enter">
+<view class="container {{darkMode ? 'theme-dark' : ''}} {{elderMode ? 'elder-mode' : ''}} page-enter">
   <!-- 页面标题 -->
   <view class="page-header">
     <text class="page-title">⚙️ 我的设置</text>
@@ -21,6 +21,22 @@
       </view>
     </view>
   </view>
+  
+  <!-- 老年关怀模式 -->
+  <view class="section section-animate" style="animation-delay: 30ms;">
+    <view class="section-title">
+      <text class="section-icon">👴</text>
+      <text>老年关怀模式</text>
+    </view>
+    <view class="elder-mode-option">
+      <view class="elder-mode-info">
+        <text class="elder-mode-label">开启大字体模式</text>
+        <text class="elder-mode-desc">字体和组件将放大1.5倍，方便老年人使用</text>
+      </view>
+      <switch class="elder-mode-switch" checked="{{elderMode}}" bindchange="onElderModeChange" color="#3a86ff" />
+    </view>
+  </view>
+  
   <!-- 存放位置管理 -->
   <view class="section section-animate" style="animation-delay: 60ms;">
     <view class="section-title">
@@ -150,7 +166,7 @@
     <view class="card-left">
       <!-- 头像区域 -->
       <view class="avatar">
-        <image class="avatar-img" src="/img/DOG.JPG" mode="aspectFill" />
+        <image class="avatar-img" src="/img/dog.jpg" mode="aspectFill" />
       </view>
     </view>
     <view class="card-right">
